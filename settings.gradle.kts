@@ -21,4 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "SunLocation"
 include(":app")
- 
+include(":domain")
+include(":data")
+include(":presentation")
