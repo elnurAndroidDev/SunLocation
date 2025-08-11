@@ -11,9 +11,9 @@ class SunRepositoryImpl(
     override suspend fun getSunPosition(
         latitude: Double,
         longitude: Double,
-        date: LocalDateTime,
-        gmtOffset: Double
+        dateTime: LocalDateTime,
+        utcOffset: Double
     ): SunPosition {
-        return sunCalculator.calculateSunPosition(latitude, longitude, date, gmtOffset)
+        return sunCalculator.calculateSunPosition(latitude, longitude, dateTime, utcOffset)
     }
 }

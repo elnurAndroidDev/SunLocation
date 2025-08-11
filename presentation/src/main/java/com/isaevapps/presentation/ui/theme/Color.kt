@@ -1,4 +1,4 @@
-package com.isaevapps.sunlocation.ui.theme
+package com.isaevapps.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -13,8 +13,8 @@ class CalculateSunPositionUseCase(
     suspend operator fun invoke(
         latitude: Double,
         longitude: Double,
-        date: LocalDateTime,
-        gmtOffset: Double
+        dateTime: LocalDateTime,
+        utcOffset: Double
     ): SunPosition =
-        withContext(dispatcher) { repository.getSunPosition(latitude, longitude, date, gmtOffset) }
+        withContext(dispatcher) { repository.getSunPosition(latitude, longitude, dateTime, utcOffset) }
 }

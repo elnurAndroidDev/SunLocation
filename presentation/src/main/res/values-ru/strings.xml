@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SunLocation</string>
+    <string name="two_values_error">Поле должно содержать: широту и долготу</string>
+    <string name="invalid_lat">Неправильная широта</string>
+    <string name="invalid_lon">Неправильная долгота</string>
+</resources>

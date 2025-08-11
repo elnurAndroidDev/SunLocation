@@ -13,19 +13,18 @@ import kotlin.math.round
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-class SunCalculator {
+object SunCalculator {
     fun calculateSunPosition(
         latitude: Double,
         longitude: Double,
-        date: LocalDateTime,
-        gmtOffset: Double
+        dateTime: LocalDateTime,
+        utcOffset: Double
     ): SunPosition {
-
-        val year = date.year
-        val month = date.monthValue
-        val day = date.dayOfMonth
-        val hour = date.hour
-        val minute = date.minute
+        val year = dateTime.year
+        val month = dateTime.monthValue
+        val day = dateTime.dayOfMonth
+        val hour = dateTime.hour
+        val minute = dateTime.minute
         val d: Int =
             367 * year - (7 * (year + ((month + 9) / 12))) / 4 + (275 * month) / 9 + day - 730530 //преобразование даты в нужное числовое значение
         val w = rev(282.9404 + 4.70935E-5 * d) //долгота перигелия
@@ -50,8 +49,8 @@ class SunCalculator {
         val RA = atan2(yequat, xequat)
         val Decl = atan2(zequat, sqrt(xequat * xequat + yequat * yequat))
 
-        /**/////////////////Звездное время.Высота и азимут///////////////////// */
-        var UT: Double = hour + minute / 60.0 - gmtOffset //время в UT
+        /**/////////////////Звездное время. Высота и азимут///////////////////// */
+        var UT: Double = hour + minute / 60.0 - utcOffset //время в UT
         if (UT < 0) UT = 24 + UT
         if (UT > 24) UT = UT - 24
         if (UT == 24.0) UT = 0.0
