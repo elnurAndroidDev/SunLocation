@@ -1,9 +1,9 @@
-package com.isaevapps.presentation.screens.home
+package com.isaevapps.presentation.screens.calculator
 
 import com.isaevapps.presentation.utils.UiText
 
 
-data class HomeUiState(
+data class CalculateUiState(
     val coordinates: String = "",
     val azimuth: String = "",
     val altitude: String = "",

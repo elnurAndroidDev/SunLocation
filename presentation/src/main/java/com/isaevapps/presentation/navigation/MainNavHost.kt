@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.isaevapps.presentation.screens.home.HomeScreen
+import com.isaevapps.presentation.screens.calculator.CalculateScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -25,7 +25,7 @@ fun MainNavHost(
 ) {
     NavHost(navController, startDestination, modifier) {
         composable<Home> {
-            HomeScreen(modifier = Modifier.fillMaxSize().padding(16.dp))
+            CalculateScreen(modifier = Modifier.fillMaxSize().padding(16.dp))
         }
 
         composable<Chart> {

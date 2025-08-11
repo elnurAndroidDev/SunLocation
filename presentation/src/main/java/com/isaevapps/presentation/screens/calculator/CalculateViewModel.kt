@@ -1,6 +1,5 @@
-package com.isaevapps.presentation.screens.home
+package com.isaevapps.presentation.screens.calculator
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.isaevapps.domain.model.Coordinates
@@ -54,7 +53,7 @@ class HomeViewModel @Inject constructor(
     private val coordinatesInputFlow = MutableStateFlow("")
     private val vmState = MutableStateFlow(HomeViewModelState(timeZone = systemUtc))
     val uiState = vmState.map { state ->
-        HomeUiState(
+        CalculateUiState(
             coordinates = state.coordinatesInput,
             invalidCoordinates = state.invalidCoordinates?.toUiText(),
             date = state.date.toStringFormatted(),
@@ -63,13 +62,13 @@ class HomeViewModel @Inject constructor(
             showTimePicker = state.showTimePicker,
             timeZones = timeZones.map { it.name },
             timeZone = state.timeZone.name,
-            azimuth = state.sunPosition?.azimuth.toString(),
-            altitude = state.sunPosition?.altitude.toString()
+            azimuth = state.sunPosition?.azimuth?.toString() ?: "-",
+            altitude = state.sunPosition?.altitude?.toString() ?: "-"
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = HomeUiState()
+        initialValue = CalculateUiState()
     )
 
     init {

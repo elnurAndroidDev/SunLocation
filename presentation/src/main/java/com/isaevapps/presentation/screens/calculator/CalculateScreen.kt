@@ -1,4 +1,4 @@
-package com.isaevapps.presentation.screens.home
+package com.isaevapps.presentation.screens.calculator
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
@@ -34,13 +34,13 @@ import java.time.LocalTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun CalculateScreen(modifier: Modifier = Modifier) {
     val viewModel = hiltViewModel<HomeViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Log.d("HomeScreen", "date: ${uiState.date}")
 
-    HomeScreenContent(
+    CalculateScreenContent(
         state = uiState,
         onCoordinatesChange = viewModel::onCoordinateChange,
         onTimeZoneChange = viewModel::onTimeZoneChange,
@@ -68,8 +68,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun HomeScreenContent(
-    state: HomeUiState,
+fun CalculateScreenContent(
+    state: CalculateUiState,
     modifier: Modifier = Modifier,
     onCoordinatesChange: (String) -> Unit = {},
     onTimeZoneChange: (String) -> Unit = {},
@@ -147,8 +147,8 @@ fun HomeScreenContent(
 @Composable
 private fun HomeScreenContentPreview() {
     SunLocationTheme {
-        HomeScreenContent(
-            state = HomeUiState(
+        CalculateScreenContent(
+            state = CalculateUiState(
                 timeZones = listOf("UTC+01:00", "UTC+02:00", "UTC+03:00"),
                 timeZone = "UTC+02:00",
                 date = "01.01.2023",
