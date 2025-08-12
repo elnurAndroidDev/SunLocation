@@ -20,6 +20,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import com.isaevapps.presentation.ui.theme.PrimaryTextColor
+import com.isaevapps.presentation.ui.theme.SecondaryTextColor
 
 @Composable
 fun AppTextField(
@@ -39,10 +41,10 @@ fun AppTextField(
             readOnly = readOnly,
             isError = isError,
             placeholder = { Text(placeholderText) },
-            label = { Text(label) },
+            label = { Text(label, color = SecondaryTextColor) },
             colors = TextFieldDefaults.colors(
-                focusedTextColor = MaterialTheme.colorScheme.onBackground,
-                unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
+                focusedTextColor = PrimaryTextColor,
+                unfocusedTextColor = PrimaryTextColor,
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
                 errorContainerColor = Color.Transparent,
@@ -60,6 +62,7 @@ fun AppTextField(
             Box(
                 modifier = Modifier
                     .matchParentSize()
+                    .clip(RoundedCornerShape(12.dp))
                     .clickable { onClick() }
             )
         }

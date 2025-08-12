@@ -27,7 +27,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 import javax.inject.Inject
 
-data class HomeViewModelState(
+data class CalculateViewModelState(
     val timeZone: TimeZone,
     val sunPosition: SunPosition? = null,
     val coordinates: Coordinates? = null,
@@ -41,7 +41,7 @@ data class HomeViewModelState(
 
 @OptIn(FlowPreview::class)
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class CalculateViewModel @Inject constructor(
     private val extractCoordinatesUseCase: ExtractCoordinatesUseCase,
     private val calculateSunPositionUseCase: CalculateSunPositionUseCase,
     timeZoneRepository: TimeZoneRepository
@@ -51,7 +51,7 @@ class HomeViewModel @Inject constructor(
     private val systemUtc = timeZoneRepository.getSystemUtc()
 
     private val coordinatesInputFlow = MutableStateFlow("")
-    private val vmState = MutableStateFlow(HomeViewModelState(timeZone = systemUtc))
+    private val vmState = MutableStateFlow(CalculateViewModelState(timeZone = systemUtc))
     val uiState = vmState.map { state ->
         CalculateUiState(
             coordinates = state.coordinatesInput,

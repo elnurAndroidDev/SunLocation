@@ -25,7 +25,7 @@ fun MainNavHost(
 ) {
     NavHost(navController, startDestination, modifier) {
         composable<Home> {
-            CalculateScreen(modifier = Modifier.fillMaxSize().padding(16.dp))
+            CalculateScreen()
         }
 
         composable<Chart> {

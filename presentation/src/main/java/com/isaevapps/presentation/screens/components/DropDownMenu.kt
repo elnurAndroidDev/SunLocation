@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.isaevapps.presentation.ui.theme.PrimaryTextColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,8 +47,8 @@ fun DropDownMenu(
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
             colors = TextFieldDefaults.colors(
-                focusedTextColor = MaterialTheme.colorScheme.onBackground,
-                unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
+                focusedTextColor = PrimaryTextColor,
+                unfocusedTextColor = PrimaryTextColor,
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
             ),
