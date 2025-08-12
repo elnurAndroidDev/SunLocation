@@ -2,16 +2,20 @@ package com.isaevapps.sunlocation.di
 
 import android.content.Context
 import com.isaevapps.data.algorithm.SunCalculator
+import com.isaevapps.data.location.LocationDataSource
 import com.isaevapps.data.network.ApiKeyQueryInterceptor
 import com.isaevapps.data.network.WeatherApi
+import com.isaevapps.data.repository.LocationRepositoryImpl
 import com.isaevapps.data.repository.ResourceTimeZoneRepository
 import com.isaevapps.data.repository.SunRepositoryImpl
 import com.isaevapps.data.repository.WeatherRepositoryImpl
+import com.isaevapps.domain.repository.LocationRepository
 import com.isaevapps.domain.repository.SunRepository
 import com.isaevapps.domain.repository.TimeZoneRepository
 import com.isaevapps.domain.repository.WeatherRepository
 import com.isaevapps.domain.usecase.CalculateSunPositionUseCase
 import com.isaevapps.domain.usecase.ExtractCoordinatesUseCase
+import com.isaevapps.domain.usecase.GetCurrentLocationUseCase
 import com.isaevapps.domain.usecase.GetCurrentWeatherUseCase
 import com.isaevapps.domain.utils.CoordinatesParser
 import com.isaevapps.domain.utils.DefaultCoordinatesParser
@@ -53,6 +57,24 @@ object AppModule {
     @Singleton
     fun provideGetCurrentWeatherUseCase(repository: WeatherRepository): GetCurrentWeatherUseCase {
         return GetCurrentWeatherUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocationDataSource(@ApplicationContext context: Context): LocationDataSource {
+        return LocationDataSource(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocationRepository(locationDataSource: LocationDataSource): LocationRepository {
+        return LocationRepositoryImpl(locationDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetCurrentLocationUseCase(repository: LocationRepository): GetCurrentLocationUseCase {
+        return GetCurrentLocationUseCase(repository)
     }
 
     @Provides
