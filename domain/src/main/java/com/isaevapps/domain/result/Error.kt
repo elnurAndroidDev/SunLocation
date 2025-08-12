@@ -7,3 +7,10 @@ enum class CoordinatesError : Error {
     INVALID_LATITUDE,
     INVALID_LONGITUDE
 }
+
+enum class NetworkError : Error {
+    NO_INTERNET,
+    SERVER_ERROR,
+    TIMEOUT,
+    UNKNOWN
+}
