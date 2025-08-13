@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -50,7 +51,10 @@ fun CalculateScreen(modifier: Modifier = Modifier) {
     val viewModel = hiltViewModel<CalculateViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    Log.d("HomeScreen", "date: ${uiState.date}")
+    Log.d(
+        "HomeScreen",
+        "date: ${uiState.invalidCoordinates?.asString(context = LocalContext.current)}"
+    )
 
     CalculateScreenContent(
         state = uiState,
@@ -89,16 +93,6 @@ fun CalculateScreenContent(
     onTimeClick: () -> Unit = {},
     onCalculateClick: () -> Unit = {}
 ) {
-    val skyGradient = Brush.linearGradient(
-        colors = listOf(
-            Color(0xFF0D1B2A),
-            Color(0xFF1B263B),
-            Color(0xFF5C7AEA),
-            Color(0xFFFAC86B)
-        ),
-        start = Offset.Zero,
-        end = Offset(1200f, 1800f)
-    )
 
 //    val shimmerAlpha by rememberInfiniteTransition(label = "shimmer")
 //        .animateFloat(
@@ -125,7 +119,6 @@ fun CalculateScreenContent(
     Box(
         modifier
             .fillMaxSize()
-            .background(skyGradient)
             .padding(20.dp)
     ) {
         Column(
@@ -250,7 +243,7 @@ fun CalculateScreenContent(
     }
 }
 
-@Preview(showSystemUi = true, showBackground = true)
+@Preview(showSystemUi = true, showBackground = false)
 @Composable
 private fun CalculateScreenContentPreview() {
     SunLocationTheme {

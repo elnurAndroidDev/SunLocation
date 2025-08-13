@@ -1,5 +1,6 @@
 package com.isaevapps.presentation.screens.calculator
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.isaevapps.domain.model.Coordinates
@@ -82,8 +83,10 @@ class CalculateViewModel @Inject constructor(
                 .debounce(300)
                 .distinctUntilChanged()
                 .collect { input ->
+                    Log.d("CalculateViewModel", "input: $input")
                     val result = extractCoordinatesUseCase(input)
                     val coordinates = (result as? Result.Success)?.data
+                    Log.d("CalculateViewModel", "coordinates: $coordinates")
                     val invalidCoordinates = (result as? Result.Error)?.error
                     if (coordinates != vmState.value.coordinates || invalidCoordinates != vmState.value.invalidCoordinates)
                         vmState.update { state ->
