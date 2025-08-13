@@ -24,9 +24,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineDispatcher
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -41,7 +41,11 @@ object AppModule {
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
-        Retrofit.Builder().baseUrl("https://api.weatherapi.com/").client(okHttpClient).build()
+        Retrofit.Builder()
+            .baseUrl("https://api.weatherapi.com/")
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
     @Provides
     @Singleton
@@ -100,7 +104,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideTimeZonesRepository(@ApplicationContext context: Context): TimeZoneRepository {
+    fun provideTimeZonesRepository(): TimeZoneRepository {
         return ResourceTimeZoneRepository()
     }
 
