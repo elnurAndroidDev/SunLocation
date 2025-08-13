@@ -8,7 +8,7 @@ import org.junit.Test
 class CoordinateParserTest {
     private val delta = 1e-6 // точность сравнения
 
-    private fun parseCoordinate(input: String, isLatitude: Boolean): kotlin.Result<Double> {
+    private fun parseCoordinate(input: String, isLatitude: Boolean): Result<Double> {
         val parser = DefaultCoordinatesParser()
         return parser.parseCoordinate(input, isLatitude)
     }

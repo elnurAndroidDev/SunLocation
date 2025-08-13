@@ -14,7 +14,7 @@ class DefaultCoordinatesParser : CoordinatesParser {
         if (input.isBlank()) {
             return Result.Error(CoordinatesError.TWO_COORDINATES)
         }
-        val parts = input.replace(",", " ").split(" ").map { it.trim() }
+        val parts = input.split(",", " ").filter { it.isNotBlank() }
         if (parts.size != 2) {
             return Result.Error(CoordinatesError.TWO_COORDINATES)
         }
