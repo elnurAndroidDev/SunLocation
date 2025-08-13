@@ -15,9 +15,9 @@ class WeatherRepositoryImpl(
         lat: Double,
         lon: Double
     ): Result<Weather, NetworkError> {
-        val lat_lon = "$lat,$lon"
+        val latLon = "$lat,$lon"
         val response = safeApiCall(
-            apiCall = { weatherApi.getWeather(lat_lon) },
+            apiCall = { weatherApi.getWeather(latLon) },
             map = { it.toDomain() }
         )
         return response

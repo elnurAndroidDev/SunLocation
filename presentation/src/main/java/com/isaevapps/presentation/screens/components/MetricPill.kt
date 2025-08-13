@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -24,7 +25,43 @@ import androidx.compose.ui.unit.dp
 fun MetricPill(
     title: String,
     value: String,
-    icon: ImageVector
+    icon: ImageVector? = null
+) {
+    Column(
+        modifier = Modifier
+            .clip(RoundedCornerShape(18.dp))
+            .background(Color.White.copy(alpha = 0.06f))
+            .padding(14.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            if (icon != null) {
+                Icon(icon, contentDescription = null, tint = Color.White.copy(alpha = 0.9f))
+                Spacer(Modifier.width(6.dp))
+            }
+            Text(
+                title,
+                style = MaterialTheme.typography.labelLarge.copy(
+                    color = Color.White.copy(alpha = 0.85f)
+                )
+            )
+        }
+        Spacer(Modifier.height(6.dp))
+        Text(
+            value,
+            style = MaterialTheme.typography.titleLarge.copy(
+                color = Color.White,
+                fontWeight = FontWeight.SemiBold
+            )
+        )
+    }
+}
+
+@Composable
+fun MetricPill(
+    title: String,
+    value: String,
+    painter: Painter? = null
 ) {
     Column(
         modifier = Modifier
@@ -33,8 +70,10 @@ fun MetricPill(
             .padding(14.dp)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(icon, contentDescription = null, tint = Color.White.copy(alpha = 0.9f))
-            Spacer(Modifier.width(6.dp))
+            if (painter != null) {
+                Icon(painter, contentDescription = null, tint = Color.White.copy(alpha = 0.9f))
+                Spacer(Modifier.width(6.dp))
+            }
             Text(
                 title,
                 style = MaterialTheme.typography.labelLarge.copy(

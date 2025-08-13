@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun GlassCard(
     modifier: Modifier = Modifier,
-    padding: Dp = 20.dp,
+    padding: Dp = 16.dp,
     content: @Composable () -> Unit
 ) {
     Box(
