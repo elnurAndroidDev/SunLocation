@@ -94,7 +94,10 @@ fun HomeScreenContent(
             .fillMaxSize()
             .padding(20.dp)
     ) {
-        Column(Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
             Text(
                 text = "Sun Location",
                 style = MaterialTheme.typography.titleLarge.copy(
@@ -103,21 +106,16 @@ fun HomeScreenContent(
                 ),
                 modifier = Modifier.alpha(0.95f)
             )
-        }
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 70.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
             GlassCard {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.weight(1f)
+                    ) {
                         Icon(
                             imageVector = Icons.Outlined.LocationOn,
                             modifier = Modifier.size(18.dp),
@@ -159,7 +157,7 @@ fun HomeScreenContent(
                     }
                 }
             }
-            Spacer(Modifier.height(12.dp))
+
             GlassCard {
                 Column {
                     Row(verticalAlignment = Alignment.CenterVertically) {
