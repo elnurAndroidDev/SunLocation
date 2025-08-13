@@ -8,4 +8,6 @@
     <string name="server_error">A server error occurred. Please try again later.</string>
     <string name="timeout">The request timed out. Please try again.</string>
     <string name="unknown_error">An unknown error occurred. Please try again.</string>
+    <string name="home">Home</string>
+    <string name="calculator">Calculate</string>
 </resources>

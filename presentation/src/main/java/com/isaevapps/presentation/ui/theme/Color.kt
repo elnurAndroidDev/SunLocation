@@ -19,8 +19,8 @@ val BackgroundGradient = Brush.linearGradient(
     colors = listOf(
         Color(0xFF0D1B2A),
         Color(0xFF1B263B),
-        Color(0xFF5C7AEA),
-        Color(0xFFFAC86B)
+        Color(0xFF243B55),
+        Color(0xFF141E30)
     ),
     start = Offset(0f, 0f),
     end = Offset(1000f, 1500f)
@@ -28,7 +28,14 @@ val BackgroundGradient = Brush.linearGradient(
 
 val ButtonGradient = Brush.horizontalGradient(
     colors = listOf(
-        Color(0xFF5C7AEA), // голубой из фона
-        Color(0xFFFAC86B)  // жёлто-оранжевый акцент
+        Color(0xFF1B263B),
+        Color(0xFF243B55)
+    )
+)
+
+val BottomBarGradient = Brush.horizontalGradient(
+    colors = listOf(
+        Color(0xFF141E30),
+        Color(0xFF243B55)
     )
 )

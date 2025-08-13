@@ -169,7 +169,7 @@ fun CalculateScreenContent(
                             .fillMaxWidth()
                             .background(ButtonGradient, RoundedCornerShape(16.dp)),
                     ) {
-                        Text("Calculate")
+                        Text("Calculate", color = Color.White)
                     }
                 }
             }

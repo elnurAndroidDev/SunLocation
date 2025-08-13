@@ -8,4 +8,6 @@
     <string name="server_error">Ошибка сервера. Повторите попытку позже.</string>
     <string name="timeout">Превышен таймаут. Повторите попытку позже</string>
     <string name="unknown_error">Неизвестная ошибка. Повторите попытку позже</string>
+    <string name="home">Home</string>
+    <string name="calculator">Расчёт</string>
 </resources>
