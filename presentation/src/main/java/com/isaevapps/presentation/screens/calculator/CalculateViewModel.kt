@@ -1,6 +1,5 @@
 package com.isaevapps.presentation.screens.calculator
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.isaevapps.domain.model.Coordinates
@@ -12,7 +11,7 @@ import com.isaevapps.domain.usecase.CalculateSunPositionUseCase
 import com.isaevapps.domain.usecase.ExtractCoordinatesUseCase
 import com.isaevapps.presentation.utils.toStringFormatted
 import com.isaevapps.presentation.utils.toUiText
-import com.isayevapps.domain.result.Result
+import com.isaevapps.domain.result.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +19,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -75,26 +73,16 @@ class CalculateViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             coordinatesInputFlow
-                .onEach {
-                    vmState.update { state ->
-                        state.copy(coordinatesInput = it)
-                    }
-                }
                 .debounce(300)
                 .distinctUntilChanged()
                 .collect { input ->
-                    Log.d("CalculateViewModel", "input: $input")
                     val result = extractCoordinatesUseCase(input)
-                    val coordinates = (result as? Result.Success)?.data
-                    Log.d("CalculateViewModel", "coordinates: $coordinates")
-                    val invalidCoordinates = (result as? Result.Error)?.error
-                    if (coordinates != vmState.value.coordinates || invalidCoordinates != vmState.value.invalidCoordinates)
-                        vmState.update { state ->
-                            state.copy(
-                                coordinates = (result as? Result.Success)?.data,
-                                invalidCoordinates = (result as? Result.Error)?.error,
-                            )
-                        }
+                    vmState.update { state ->
+                        state.copy(
+                            coordinates = result.dataOrNull,
+                            invalidCoordinates = result.errorOrNull,
+                        )
+                    }
                 }
         }
     }
@@ -119,6 +107,9 @@ class CalculateViewModel @Inject constructor(
     }
 
     fun onCoordinateChange(coordinates: String) {
+        vmState.update { it ->
+            it.copy(coordinatesInput = coordinates)
+        }
         coordinatesInputFlow.value = coordinates
     }
 

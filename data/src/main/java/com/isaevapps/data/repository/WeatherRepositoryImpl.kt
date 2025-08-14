@@ -6,7 +6,7 @@ import com.isaevapps.data.toDomain
 import com.isaevapps.domain.model.Weather
 import com.isaevapps.domain.repository.WeatherRepository
 import com.isaevapps.domain.result.NetworkError
-import com.isayevapps.domain.result.Result
+import com.isaevapps.domain.result.Result
 
 class WeatherRepositoryImpl(
     private val weatherApi: WeatherApi

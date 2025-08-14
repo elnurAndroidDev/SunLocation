@@ -1,7 +1,7 @@
 package com.isaevapps.data.network
 
 import com.isaevapps.domain.result.NetworkError
-import com.isayevapps.domain.result.Result
+import com.isaevapps.domain.result.Result
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.SocketTimeoutException

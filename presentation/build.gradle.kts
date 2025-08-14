@@ -60,8 +60,6 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
 
-
-
     //Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)

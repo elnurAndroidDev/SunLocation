@@ -2,12 +2,8 @@ package com.isaevapps.domain.usecase
 
 import com.isaevapps.domain.model.Coordinates
 import com.isaevapps.domain.result.CoordinatesError
-import com.isaevapps.domain.utils.CoordinatesParser
 import com.isaevapps.domain.utils.DefaultCoordinatesParser
-import com.isayevapps.domain.result.Result
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import com.isaevapps.domain.result.Result
 import org.junit.Test
 import org.junit.Assert.assertEquals
 

@@ -8,23 +8,17 @@ import com.isaevapps.domain.repository.TimeZoneRepository
 import com.isaevapps.domain.usecase.CalculateSunPositionUseCase
 import com.isaevapps.domain.usecase.GetCurrentLocationUseCase
 import com.isaevapps.domain.usecase.GetCurrentWeatherUseCase
-import com.isayevapps.domain.result.Result
+import com.isaevapps.domain.result.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import javax.inject.Inject
-import kotlin.math.round
 import kotlin.math.roundToLong
 
 @HiltViewModel

@@ -2,7 +2,7 @@ package com.isaevapps.domain.utils
 
 import com.isaevapps.domain.model.Coordinates
 import com.isaevapps.domain.result.CoordinatesError
-import com.isayevapps.domain.result.Result
+import com.isaevapps.domain.result.Result
 import kotlin.Result as KotlinResult
 
 interface CoordinatesParser {

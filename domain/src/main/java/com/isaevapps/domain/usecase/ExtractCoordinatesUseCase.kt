@@ -3,7 +3,7 @@ package com.isaevapps.domain.usecase
 import com.isaevapps.domain.model.Coordinates
 import com.isaevapps.domain.result.CoordinatesError
 import com.isaevapps.domain.utils.CoordinatesParser
-import com.isayevapps.domain.result.Result
+import com.isaevapps.domain.result.Result
 
 class ExtractCoordinatesUseCase(
     private val coordinatesParser: CoordinatesParser
