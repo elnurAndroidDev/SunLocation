@@ -47,15 +47,15 @@ fun DropDownMenu(
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
             colors = TextFieldDefaults.colors(
-                focusedTextColor = PrimaryTextColor,
-                unfocusedTextColor = PrimaryTextColor,
+                focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
             ),
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(12.dp))
-                .border(1.dp, Color.Gray, RoundedCornerShape(12.dp))
+                .border(1.dp, MaterialTheme.colorScheme.onSurface, RoundedCornerShape(12.dp))
                 .menuAnchor(
                     type = MenuAnchorType.PrimaryNotEditable,
                     enabled = true

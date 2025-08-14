@@ -41,10 +41,10 @@ fun AppTextField(
             readOnly = readOnly,
             isError = isError,
             placeholder = { Text(placeholderText) },
-            label = { Text(label, color = SecondaryTextColor) },
+            label = { Text(label, color = MaterialTheme.colorScheme.onSurface) },
             colors = TextFieldDefaults.colors(
-                focusedTextColor = PrimaryTextColor,
-                unfocusedTextColor = PrimaryTextColor,
+                focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
                 errorContainerColor = Color.Transparent,
@@ -56,7 +56,7 @@ fun AppTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(12.dp))
-                .border(1.dp, if (isError) Color.Red else Color.Gray, RoundedCornerShape(12.dp))
+                .border(1.dp, if (isError) Color.Red else MaterialTheme.colorScheme.onSurface, RoundedCornerShape(12.dp))
         )
         if (readOnly) {
             Box(

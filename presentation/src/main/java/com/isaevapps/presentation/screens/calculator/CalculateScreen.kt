@@ -1,5 +1,6 @@
 package com.isaevapps.presentation.screens.calculator
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,8 +39,8 @@ import com.isaevapps.presentation.screens.components.DropDownMenu
 import com.isaevapps.presentation.screens.components.GlassCard
 import com.isaevapps.presentation.screens.components.MetricPill
 import com.isaevapps.presentation.screens.components.SunBadge
-import com.isaevapps.presentation.ui.theme.ButtonGradient
 import com.isaevapps.presentation.ui.theme.SunLocationTheme
+import com.isaevapps.presentation.ui.theme.gradients
 import com.isaevapps.presentation.utils.toLocalDateOrNull
 import com.isaevapps.presentation.utils.toLocalTimeOrNull
 import java.time.LocalDate
@@ -101,7 +102,7 @@ fun CalculateScreenContent(
                 "Sun Calculator",
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.SemiBold,
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.onBackground
                 )
             )
 
@@ -110,7 +111,7 @@ fun CalculateScreenContent(
                     Text(
                         "Input",
                         style = MaterialTheme.typography.titleMedium.copy(
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onBackground,
                             fontWeight = FontWeight.SemiBold
                         )
                     )
@@ -162,12 +163,12 @@ fun CalculateScreenContent(
                     Button(
                         onClick = onCalculateClick,
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Transparent
+                            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0f),
                         ),
                         contentPadding = PaddingValues(),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(ButtonGradient, RoundedCornerShape(16.dp)),
+                            .background(MaterialTheme.gradients.accent, RoundedCornerShape(16.dp)),
                     ) {
                         Text("Calculate", color = Color.White)
                     }
@@ -185,7 +186,7 @@ fun CalculateScreenContent(
                         Text(
                             "Sun position",
                             style = MaterialTheme.typography.titleMedium.copy(
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontWeight = FontWeight.SemiBold
                             )
                         )
@@ -201,12 +202,12 @@ fun CalculateScreenContent(
                         MetricPill(
                             title = "Azimuth",
                             value = state.azimuth,
-                            icon = Icons.Outlined.Info
+                            icon = null
                         )
                         MetricPill(
                             title = "Altitude",
                             value = state.altitude,
-                            icon = Icons.Outlined.Info
+                            icon = null
                         )
                     }
                 }
@@ -215,9 +216,27 @@ fun CalculateScreenContent(
     }
 }
 
-@Preview(showSystemUi = false, showBackground = false)
+@Preview(showSystemUi = false, showBackground = false,
+    uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL
+)
 @Composable
 private fun CalculateScreenContentPreview() {
+    SunLocationTheme {
+        CalculateScreenContent(
+            state = CalculateUiState(
+                timeZones = listOf("UTC+01:00", "UTC+02:00", "UTC+03:00"),
+                timeZone = "UTC+02:00",
+                date = "01.01.2023",
+                time = "12:00",
+                coordinates = "55°45′0″N 37°37′0″E"
+            )
+        )
+    }
+}
+
+@Preview(showSystemUi = false, showBackground = false)
+@Composable
+private fun CalculateScreenContentNightPreview() {
     SunLocationTheme {
         CalculateScreenContent(
             state = CalculateUiState(

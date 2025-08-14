@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -23,8 +21,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.isaevapps.presentation.R
-import com.isaevapps.presentation.ui.theme.BackgroundGradient
-import com.isaevapps.presentation.ui.theme.BottomBarGradient
+import com.isaevapps.presentation.ui.theme.gradients
 
 data class BottomNavItem<T : Any>(
     val route: T,
@@ -53,7 +50,7 @@ fun BottomBar(navController: NavHostController) {
 
     NavigationBar(
         containerColor = Color.Transparent,
-        modifier = Modifier.background(brush = BottomBarGradient),
+        modifier = Modifier.background(MaterialTheme.gradients.primary),
     ) {
         BottomNavItem.items().forEach { item ->
             val isSelected = currentDestination?.hierarchy?.any {
@@ -76,11 +73,11 @@ fun BottomBar(navController: NavHostController) {
                 },
                 label = { Text(text = stringResource(item.label)) },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    selectedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    indicatorColor = MaterialTheme.colorScheme.primaryContainer
+                    selectedIconColor = Color(0xFF384160),
+                    unselectedIconColor = Color(0xFF919191),
+                    selectedTextColor = Color(0xFFFFFFFF),
+                    unselectedTextColor = Color(0xFF919191),
+                    indicatorColor = Color(0xFFD3E2E7)
                 )
             )
         }

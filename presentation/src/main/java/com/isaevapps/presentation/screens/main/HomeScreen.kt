@@ -50,7 +50,6 @@ import com.isaevapps.presentation.SunLocationApp
 import com.isaevapps.presentation.screens.components.GlassCard
 import com.isaevapps.presentation.screens.components.MetricPill
 import com.isaevapps.presentation.screens.components.SunBadge
-import com.isaevapps.presentation.ui.theme.BackgroundGradient
 import com.isaevapps.presentation.ui.theme.SunLocationTheme
 import kotlin.math.cos
 import kotlin.math.sin
@@ -102,7 +101,7 @@ fun HomeScreenContent(
                 text = "Sun Location",
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.SemiBold,
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.onBackground
                 ),
                 modifier = Modifier.alpha(0.95f)
             )
@@ -120,12 +119,12 @@ fun HomeScreenContent(
                             imageVector = Icons.Outlined.LocationOn,
                             modifier = Modifier.size(18.dp),
                             contentDescription = null,
-                            tint = Color.White.copy(alpha = 0.9f)
+                            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.9f)
                         )
                         Spacer(Modifier.width(2.dp))
                         Text(
                             text = state.city,
-                            style = MaterialTheme.typography.titleMedium.copy(color = Color.White),
+                            style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onBackground),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
@@ -133,26 +132,15 @@ fun HomeScreenContent(
                     Text(
                         state.temp,
                         style = MaterialTheme.typography.titleLarge.copy(
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onBackground
                         ),
                         modifier = Modifier.weight(1f),
                         textAlign = TextAlign.Center
                     )
                     Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                        AssistChip(
-                            onClick = {},
-                            label = {
-                                Text(
-                                    state.condition,
-                                    color = Color.White,
-                                    fontSize = 14.sp
-                                )
-                            },
-                            modifier = Modifier.alpha(0.95f),
-                            colors = AssistChipDefaults.assistChipColors(
-                                containerColor = Color.White.copy(alpha = 0.08f),
-                                labelColor = Color.White
-                            )
+                        Text(
+                            state.condition,
+                            style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onBackground),
                         )
                     }
                 }
@@ -165,12 +153,12 @@ fun HomeScreenContent(
                             imageVector = Icons.Outlined.LocationOn,
                             modifier = Modifier.size(18.dp),
                             contentDescription = null,
-                            tint = Color.White.copy(alpha = 0.9f)
+                            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.9f)
                         )
                         Spacer(Modifier.width(2.dp))
                         Text(
                             text = state.coords,
-                            style = MaterialTheme.typography.titleMedium.copy(color = Color.White),
+                            style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onBackground),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )

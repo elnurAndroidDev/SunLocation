@@ -18,15 +18,14 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun GlassCard(
     modifier: Modifier = Modifier,
-    padding: Dp = 16.dp,
+    padding: Dp = 20.dp,
     content: @Composable () -> Unit
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(24.dp))
-            .background(Color.White.copy(alpha = 0.08f))
-            .blur(0.5.dp)
+            .background(Color.White.copy(alpha = 0.2f))
             .padding(padding)
     ) {
         content()

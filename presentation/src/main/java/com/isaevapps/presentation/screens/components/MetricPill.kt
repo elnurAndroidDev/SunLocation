@@ -30,8 +30,8 @@ fun MetricPill(
     Column(
         modifier = Modifier
             .clip(RoundedCornerShape(18.dp))
-            .background(Color.White.copy(alpha = 0.06f))
-            .padding(14.dp),
+            .background(Color.White.copy(alpha = 0.2f))
+            .padding(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -42,7 +42,7 @@ fun MetricPill(
             Text(
                 title,
                 style = MaterialTheme.typography.labelLarge.copy(
-                    color = Color.White.copy(alpha = 0.85f)
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.85f)
                 )
             )
         }
@@ -50,7 +50,7 @@ fun MetricPill(
         Text(
             value,
             style = MaterialTheme.typography.titleLarge.copy(
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.SemiBold
             )
         )
@@ -71,13 +71,13 @@ fun MetricPill(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             if (painter != null) {
-                Icon(painter, contentDescription = null, tint = Color.White.copy(alpha = 0.9f))
+                Icon(painter, contentDescription = null, tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.9f))
                 Spacer(Modifier.width(6.dp))
             }
             Text(
                 title,
                 style = MaterialTheme.typography.labelLarge.copy(
-                    color = Color.White.copy(alpha = 0.85f)
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.85f)
                 )
             )
         }
@@ -85,7 +85,7 @@ fun MetricPill(
         Text(
             value,
             style = MaterialTheme.typography.titleLarge.copy(
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.SemiBold
             )
         )
