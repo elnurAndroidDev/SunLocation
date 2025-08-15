@@ -4,10 +4,10 @@
     <string name="two_values_error">Поле должно содержать: широту и долготу</string>
     <string name="invalid_lat">Неправильная широта</string>
     <string name="invalid_lon">Неправильная долгота</string>
-    <string name="no_internet">Нет подключения к интернету. Проверьте подключение и попробуйте снова.</string>
-    <string name="server_error">Ошибка сервера. Повторите попытку позже.</string>
-    <string name="timeout">Превышен таймаут. Повторите попытку позже</string>
-    <string name="unknown_error">Неизвестная ошибка. Повторите попытку позже</string>
+    <string name="no_internet">Нет подключения к интернету</string>
+    <string name="server_error">Ошибка сервера</string>
+    <string name="timeout">Превышен таймаут</string>
+    <string name="unknown_error">Неизвестная ошибка</string>
     <string name="home">Главная</string>
     <string name="calculator">Расчёт</string>
     <string name="input">Ввод</string>

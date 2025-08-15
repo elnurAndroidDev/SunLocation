@@ -4,10 +4,10 @@
     <string name="two_values_error">Input must contain exactly two values: lat,lon</string>
     <string name="invalid_lat">Invalid Latitude</string>
     <string name="invalid_lon">Invalid Longitude</string>
-    <string name="no_internet">No internet connection. Please check your connection and try again.</string>
-    <string name="server_error">A server error occurred. Please try again later.</string>
-    <string name="timeout">The request timed out. Please try again.</string>
-    <string name="unknown_error">An unknown error occurred. Please try again.</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="server_error">A server error occurred</string>
+    <string name="timeout">The request timed out</string>
+    <string name="unknown_error">An unknown error occurred.</string>
     <string name="home">Home</string>
     <string name="calculator">Calculate</string>
     <string name="input">Input</string>

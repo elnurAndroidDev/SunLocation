@@ -28,19 +28,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import com.isaevapps.domain.result.NetworkError
 import com.isaevapps.presentation.R
 import com.isaevapps.presentation.screens.components.GlassCard
 import com.isaevapps.presentation.screens.components.MetricPill
 import com.isaevapps.presentation.ui.theme.SunLocationTheme
+import com.isaevapps.presentation.utils.toUiText
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -94,41 +98,52 @@ fun HomeScreenContent(
                 modifier = Modifier.alpha(0.95f)
             )
 
-            GlassCard {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+            GlassCard(padding = 0.dp) {
+                Box {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(20.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(
-                            imageVector = Icons.Outlined.LocationOn,
-                            modifier = Modifier.size(18.dp),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.9f)
-                        )
-                        Spacer(Modifier.width(2.dp))
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.LocationOn,
+                                modifier = Modifier.size(18.dp),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.9f)
+                            )
+                            Spacer(Modifier.width(2.dp))
+                            Text(
+                                text = state.city,
+                                style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onBackground),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
                         Text(
-                            text = state.city,
-                            style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onBackground),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            state.temp,
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                color = MaterialTheme.colorScheme.onBackground
+                            ),
+                            modifier = Modifier.weight(1f),
+                            textAlign = TextAlign.Center
                         )
+                        Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                            Text(
+                                state.condition,
+                                style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onBackground),
+                            )
+                        }
                     }
-                    Text(
-                        state.temp,
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            color = MaterialTheme.colorScheme.onBackground
-                        ),
-                        modifier = Modifier.weight(1f),
-                        textAlign = TextAlign.Center
-                    )
-                    Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                    if (state.weatherError != null) {
                         Text(
-                            state.condition,
-                            style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onBackground),
+                            text = state.weatherError.asString(LocalContext.current),
+                            fontSize = 12.sp,
+                            modifier = Modifier.align(Alignment.BottomCenter)
                         )
                     }
                 }
@@ -158,11 +173,11 @@ fun HomeScreenContent(
                     ) {
                         MetricPill(
                             title = stringResource(R.string.azimuth),
-                            value = stringResource(R.string.altitude),
+                            value = state.azimuth,
                             icon = null
                         )
                         MetricPill(
-                            title = "Altitude",
+                            title = stringResource(R.string.altitude),
                             value = state.altitude,
                             icon = null,
                         )
@@ -184,7 +199,8 @@ private fun PreviewSunUiLight() {
                 condition = "Clear",
                 coords = "41.2995, 69.2401",
                 azimuth = "123°",
-                altitude = "66°"
+                altitude = "66°",
+                weatherError = NetworkError.NO_INTERNET.toUiText()
             )
         )
     }

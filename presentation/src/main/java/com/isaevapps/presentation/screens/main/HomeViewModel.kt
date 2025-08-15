@@ -1,14 +1,14 @@
 package com.isaevapps.presentation.screens.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.isaevapps.domain.model.Location
 import com.isaevapps.domain.repository.TimeZoneRepository
+import com.isaevapps.domain.result.Result
 import com.isaevapps.domain.usecase.CalculateSunPositionUseCase
 import com.isaevapps.domain.usecase.GetCurrentLocationUseCase
 import com.isaevapps.domain.usecase.GetCurrentWeatherUseCase
-import com.isaevapps.domain.result.Result
+import com.isaevapps.presentation.utils.toUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -76,12 +76,17 @@ class HomeViewModel @Inject constructor(
                                 state.copy(
                                     city = weather.city,
                                     temp = "${weather.temp}°",
-                                    condition = weather.condition
+                                    condition = weather.condition,
+                                    weatherError = null
                                 )
                             }
                         }
                         if (weatherResult is Result.Error) {
-                            Log.d("HomeViewModel", "Error: ${weatherResult.error}")
+                            _uiState.update { state ->
+                                state.copy(
+                                    weatherError = weatherResult.error.toUiText()
+                                )
+                            }
                         }
                     }
                 }
