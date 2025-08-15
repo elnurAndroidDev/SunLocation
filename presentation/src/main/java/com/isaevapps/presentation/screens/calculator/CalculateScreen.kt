@@ -27,11 +27,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.isaevapps.domain.result.CoordinatesError
 import com.isaevapps.presentation.screens.components.AppDatePickerDialog
 import com.isaevapps.presentation.screens.components.AppTextField
 import com.isaevapps.presentation.screens.components.AppTimePickerDialog
@@ -41,8 +43,10 @@ import com.isaevapps.presentation.screens.components.MetricPill
 import com.isaevapps.presentation.screens.components.SunBadge
 import com.isaevapps.presentation.ui.theme.SunLocationTheme
 import com.isaevapps.presentation.ui.theme.gradients
+import com.isaevapps.presentation.utils.UiText
 import com.isaevapps.presentation.utils.toLocalDateOrNull
 import com.isaevapps.presentation.utils.toLocalTimeOrNull
+import com.isaevapps.presentation.utils.toUiText
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -121,7 +125,7 @@ fun CalculateScreenContent(
                         value = state.coordinates,
                         onValueChange = onCoordinatesChange,
                         label = "Coordinates",
-                        isError = state.invalidCoordinates != null,
+                        errorText = state.invalidCoordinates?.asString(LocalContext.current),
                         modifier = Modifier.fillMaxWidth()
                     )
 
@@ -244,7 +248,8 @@ private fun CalculateScreenContentNightPreview() {
                 timeZone = "UTC+02:00",
                 date = "01.01.2023",
                 time = "12:00",
-                coordinates = "55°45′0″N 37°37′0″E"
+                coordinates = "100°45′0″N 37°37′0″E",
+                invalidCoordinates = CoordinatesError.INVALID_LATITUDE.toUiText()
             )
         )
     }
