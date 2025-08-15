@@ -10,4 +10,13 @@
     <string name="unknown_error">Неизвестная ошибка. Повторите попытку позже</string>
     <string name="home">Главная</string>
     <string name="calculator">Расчёт</string>
+    <string name="input">Ввод</string>
+    <string name="coordinates">Координаты</string>
+    <string name="date">Дата</string>
+    <string name="time">Время</string>
+    <string name="calculate">Вычислить</string>
+    <string name="sun_position">Положение Солнца</string>
+    <string name="azimuth">Азимут</string>
+    <string name="altitude">Высота</string>
+    <string name="sun_calculator">Вычисление положения</string>
 </resources>

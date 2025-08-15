@@ -3,56 +3,44 @@
 package com.isaevapps.presentation.screens.main
 
 import android.Manifest
-import com.isaevapps.presentation.R
 import android.content.res.Configuration
 import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.core.*
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.LocationOn
-import androidx.compose.material.icons.outlined.Star
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.blur
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import com.isaevapps.presentation.SunLocationApp
+import com.isaevapps.presentation.R
 import com.isaevapps.presentation.screens.components.GlassCard
 import com.isaevapps.presentation.screens.components.MetricPill
-import com.isaevapps.presentation.screens.components.SunBadge
 import com.isaevapps.presentation.ui.theme.SunLocationTheme
-import kotlin.math.cos
-import kotlin.math.sin
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -98,7 +86,7 @@ fun HomeScreenContent(
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Text(
-                text = "Sun Location",
+                text = stringResource(R.string.sun_position),
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onBackground
@@ -169,8 +157,8 @@ fun HomeScreenContent(
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         MetricPill(
-                            title = "Azimuth",
-                            value = state.azimuth,
+                            title = stringResource(R.string.azimuth),
+                            value = stringResource(R.string.altitude),
                             icon = null
                         )
                         MetricPill(

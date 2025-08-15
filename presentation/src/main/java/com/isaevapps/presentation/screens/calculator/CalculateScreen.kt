@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,15 +23,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.isaevapps.domain.result.CoordinatesError
+import com.isaevapps.presentation.R
 import com.isaevapps.presentation.screens.components.AppDatePickerDialog
 import com.isaevapps.presentation.screens.components.AppTextField
 import com.isaevapps.presentation.screens.components.AppTimePickerDialog
@@ -43,7 +42,6 @@ import com.isaevapps.presentation.screens.components.MetricPill
 import com.isaevapps.presentation.screens.components.SunBadge
 import com.isaevapps.presentation.ui.theme.SunLocationTheme
 import com.isaevapps.presentation.ui.theme.gradients
-import com.isaevapps.presentation.utils.UiText
 import com.isaevapps.presentation.utils.toLocalDateOrNull
 import com.isaevapps.presentation.utils.toLocalTimeOrNull
 import com.isaevapps.presentation.utils.toUiText
@@ -103,7 +101,7 @@ fun CalculateScreenContent(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                "Sun Calculator",
+                stringResource(R.string.sun_calculator),
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onBackground
@@ -113,7 +111,7 @@ fun CalculateScreenContent(
             GlassCard {
                 Column {
                     Text(
-                        "Input",
+                        stringResource(R.string.input),
                         style = MaterialTheme.typography.titleMedium.copy(
                             color = MaterialTheme.colorScheme.onBackground,
                             fontWeight = FontWeight.SemiBold
@@ -124,7 +122,7 @@ fun CalculateScreenContent(
                     AppTextField(
                         value = state.coordinates,
                         onValueChange = onCoordinatesChange,
-                        label = "Coordinates",
+                        label = stringResource(R.string.coordinates),
                         errorText = state.invalidCoordinates?.asString(LocalContext.current),
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -145,7 +143,7 @@ fun CalculateScreenContent(
                             value = state.date,
                             onClick = onDateClick,
                             readOnly = true,
-                            label = "Date",
+                            label = stringResource(R.string.date),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .weight(1f)
@@ -155,7 +153,7 @@ fun CalculateScreenContent(
                             value = state.time,
                             onClick = onTimeClick,
                             readOnly = true,
-                            label = "Time",
+                            label = stringResource(R.string.time),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .weight(1f)
@@ -174,7 +172,7 @@ fun CalculateScreenContent(
                             .fillMaxWidth()
                             .background(MaterialTheme.gradients.accent, RoundedCornerShape(16.dp)),
                     ) {
-                        Text("Calculate", color = Color.White)
+                        Text(stringResource(R.string.calculate), color = Color.White)
                     }
                 }
             }
@@ -188,7 +186,7 @@ fun CalculateScreenContent(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            "Sun position",
+                            stringResource(R.string.sun_position),
                             style = MaterialTheme.typography.titleMedium.copy(
                                 color = MaterialTheme.colorScheme.onBackground,
                                 fontWeight = FontWeight.SemiBold
@@ -204,12 +202,12 @@ fun CalculateScreenContent(
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         MetricPill(
-                            title = "Azimuth",
+                            title = stringResource(R.string.azimuth),
                             value = state.azimuth,
                             icon = null
                         )
                         MetricPill(
-                            title = "Altitude",
+                            title = stringResource(R.string.altitude),
                             value = state.altitude,
                             icon = null
                         )
