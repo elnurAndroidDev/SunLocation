@@ -21,6 +21,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.isaevapps.presentation.R
+import com.isaevapps.presentation.ui.theme.appColors
 import com.isaevapps.presentation.ui.theme.gradients
 
 data class BottomNavItem<T : Any>(
@@ -73,10 +74,10 @@ fun BottomBar(navController: NavHostController) {
                 },
                 label = { Text(text = stringResource(item.label)) },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Color(0xFF384160),
-                    unselectedIconColor = Color(0xFF919191),
-                    selectedTextColor = Color(0xFFFFFFFF),
-                    unselectedTextColor = Color(0xFF919191),
+                    selectedIconColor = MaterialTheme.appColors.onSurface,
+                    unselectedIconColor = Color.White,
+                    selectedTextColor = MaterialTheme.appColors.onBackground,
+                    unselectedTextColor = Color.White,
                     indicatorColor = Color(0xFFD3E2E7)
                 )
             )

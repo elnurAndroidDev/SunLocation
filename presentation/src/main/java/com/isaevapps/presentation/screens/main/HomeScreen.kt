@@ -44,6 +44,7 @@ import com.isaevapps.presentation.R
 import com.isaevapps.presentation.screens.components.GlassCard
 import com.isaevapps.presentation.screens.components.MetricPill
 import com.isaevapps.presentation.ui.theme.SunLocationTheme
+import com.isaevapps.presentation.ui.theme.appColors
 import com.isaevapps.presentation.utils.toUiText
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -93,7 +94,7 @@ fun HomeScreenContent(
                 text = stringResource(R.string.sun_position),
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onBackground
+                    color = MaterialTheme.appColors.onBackground
                 ),
                 modifier = Modifier.alpha(0.95f)
             )
@@ -114,12 +115,12 @@ fun HomeScreenContent(
                                 imageVector = Icons.Outlined.LocationOn,
                                 modifier = Modifier.size(18.dp),
                                 contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.9f)
+                                tint = MaterialTheme.appColors.onBackground.copy(alpha = 0.9f)
                             )
                             Spacer(Modifier.width(2.dp))
                             Text(
                                 text = state.city,
-                                style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onBackground),
+                                style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.appColors.onBackground),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
@@ -127,7 +128,7 @@ fun HomeScreenContent(
                         Text(
                             state.temp,
                             style = MaterialTheme.typography.titleLarge.copy(
-                                color = MaterialTheme.colorScheme.onBackground
+                                color = MaterialTheme.appColors.onBackground
                             ),
                             modifier = Modifier.weight(1f),
                             textAlign = TextAlign.Center
@@ -135,7 +136,7 @@ fun HomeScreenContent(
                         Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
                             Text(
                                 state.condition,
-                                style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onBackground),
+                                style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.appColors.onBackground),
                             )
                         }
                     }
@@ -143,6 +144,7 @@ fun HomeScreenContent(
                         Text(
                             text = state.weatherError.asString(LocalContext.current),
                             fontSize = 12.sp,
+                            color = MaterialTheme.appColors.onBackground,
                             modifier = Modifier.align(Alignment.BottomCenter)
                         )
                     }
@@ -156,12 +158,12 @@ fun HomeScreenContent(
                             imageVector = Icons.Outlined.LocationOn,
                             modifier = Modifier.size(18.dp),
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.9f)
+                            tint = MaterialTheme.appColors.onBackground.copy(alpha = 0.9f)
                         )
                         Spacer(Modifier.width(2.dp))
                         Text(
                             text = state.coords,
-                            style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onBackground),
+                            style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.appColors.onBackground),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )

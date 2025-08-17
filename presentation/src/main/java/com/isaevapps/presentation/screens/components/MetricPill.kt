@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.isaevapps.presentation.ui.theme.appColors
 
 @Composable
 fun MetricPill(
@@ -42,7 +43,7 @@ fun MetricPill(
             Text(
                 title,
                 style = MaterialTheme.typography.labelLarge.copy(
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.85f)
+                    color = MaterialTheme.appColors.onBackground.copy(alpha = 0.85f)
                 )
             )
         }
@@ -50,7 +51,7 @@ fun MetricPill(
         Text(
             value,
             style = MaterialTheme.typography.titleLarge.copy(
-                color = MaterialTheme.colorScheme.onBackground,
+                color = MaterialTheme.appColors.onBackground,
                 fontWeight = FontWeight.SemiBold
             )
         )
@@ -71,13 +72,17 @@ fun MetricPill(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             if (painter != null) {
-                Icon(painter, contentDescription = null, tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.9f))
+                Icon(
+                    painter,
+                    contentDescription = null,
+                    tint = MaterialTheme.appColors.onBackground.copy(alpha = 0.9f)
+                )
                 Spacer(Modifier.width(6.dp))
             }
             Text(
                 title,
                 style = MaterialTheme.typography.labelLarge.copy(
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.85f)
+                    color = MaterialTheme.appColors.onBackground.copy(alpha = 0.85f)
                 )
             )
         }
@@ -85,7 +90,7 @@ fun MetricPill(
         Text(
             value,
             style = MaterialTheme.typography.titleLarge.copy(
-                color = MaterialTheme.colorScheme.onBackground,
+                color = MaterialTheme.appColors.onBackground,
                 fontWeight = FontWeight.SemiBold
             )
         )

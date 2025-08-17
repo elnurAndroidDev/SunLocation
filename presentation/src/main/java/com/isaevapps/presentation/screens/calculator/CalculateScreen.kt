@@ -41,6 +41,7 @@ import com.isaevapps.presentation.screens.components.GlassCard
 import com.isaevapps.presentation.screens.components.MetricPill
 import com.isaevapps.presentation.screens.components.SunBadge
 import com.isaevapps.presentation.ui.theme.SunLocationTheme
+import com.isaevapps.presentation.ui.theme.appColors
 import com.isaevapps.presentation.ui.theme.gradients
 import com.isaevapps.presentation.utils.toLocalDateOrNull
 import com.isaevapps.presentation.utils.toLocalTimeOrNull
@@ -104,7 +105,7 @@ fun CalculateScreenContent(
                 stringResource(R.string.sun_calculator),
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onBackground
+                    color = MaterialTheme.appColors.onBackground
                 )
             )
 
@@ -113,7 +114,7 @@ fun CalculateScreenContent(
                     Text(
                         stringResource(R.string.input),
                         style = MaterialTheme.typography.titleMedium.copy(
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = MaterialTheme.appColors.onBackground,
                             fontWeight = FontWeight.SemiBold
                         )
                     )
@@ -164,8 +165,9 @@ fun CalculateScreenContent(
 
                     Button(
                         onClick = onCalculateClick,
+                        elevation = ButtonDefaults.buttonElevation(defaultElevation = 12.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0f),
+                            containerColor = MaterialTheme.appColors.primary.copy(alpha = 0f),
                         ),
                         contentPadding = PaddingValues(),
                         modifier = Modifier
@@ -188,7 +190,7 @@ fun CalculateScreenContent(
                         Text(
                             stringResource(R.string.sun_position),
                             style = MaterialTheme.typography.titleMedium.copy(
-                                color = MaterialTheme.colorScheme.onBackground,
+                                color = MaterialTheme.appColors.onBackground,
                                 fontWeight = FontWeight.SemiBold
                             )
                         )

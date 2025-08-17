@@ -1,6 +1,5 @@
 package com.isaevapps.presentation.screens.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.isaevapps.presentation.ui.theme.PrimaryTextColor
+import com.isaevapps.presentation.ui.theme.appColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,15 +46,15 @@ fun DropDownMenu(
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
             colors = TextFieldDefaults.colors(
-                focusedTextColor = MaterialTheme.colorScheme.onBackground,
-                unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
+                focusedTextColor = MaterialTheme.appColors.onBackground,
+                unfocusedTextColor = MaterialTheme.appColors.onBackground,
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
             ),
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(12.dp))
-                .border(1.dp, MaterialTheme.colorScheme.onSurface, RoundedCornerShape(12.dp))
+                .border(1.dp, MaterialTheme.appColors.onSurface, RoundedCornerShape(12.dp))
                 .menuAnchor(
                     type = MenuAnchorType.PrimaryNotEditable,
                     enabled = true
