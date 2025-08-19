@@ -46,19 +46,7 @@ class HomeViewModel @Inject constructor(
                     val lat = it.lat
                     val lon = it.lon
                     preciseLocation = Location(lat, lon)
-                    val sunPosition = calculateSunPositionUseCase(
-                        latitude = lat,
-                        longitude = lon,
-                        dateTime = LocalDateTime.now(),
-                        utcOffset = systemUTC
-                    )
-                    _uiState.update { state ->
-                        state.copy(
-                            coords = "$lat, $lon",
-                            azimuth = "${sunPosition.azimuth}°",
-                            altitude = "${sunPosition.altitude}°"
-                        )
-                    }
+                    updateSunPosition(lat, lon)
                 }
                 .map {
                     Location(
@@ -69,27 +57,47 @@ class HomeViewModel @Inject constructor(
                 .distinctUntilChanged()
                 .collect {
                     preciseLocation?.let {
-                        val weatherResult = getCurrentWeatherUseCase(it.lat, it.lon)
-                        if (weatherResult is Result.Success) {
-                            val weather = weatherResult.data
-                            _uiState.update { state ->
-                                state.copy(
-                                    city = weather.city,
-                                    temp = "${weather.temp}°",
-                                    condition = weather.condition,
-                                    weatherError = null
-                                )
-                            }
-                        }
-                        if (weatherResult is Result.Error) {
-                            _uiState.update { state ->
-                                state.copy(
-                                    weatherError = weatherResult.error.toUiText()
-                                )
-                            }
-                        }
+                        updateWeather(it.lat, it.lon)
                     }
                 }
+        }
+    }
+
+    private fun updateSunPosition(lat: Double, lon: Double) = viewModelScope.launch {
+        val sunPosition = calculateSunPositionUseCase(
+            latitude = lat,
+            longitude = lon,
+            dateTime = LocalDateTime.now(),
+            utcOffset = systemUTC
+        )
+        _uiState.update { state ->
+            state.copy(
+                coords = "$lat, $lon",
+                azimuth = "${sunPosition.azimuth}°",
+                altitude = "${sunPosition.altitude}°"
+            )
+        }
+    }
+
+    private fun updateWeather(lat: Double, lon: Double) = viewModelScope.launch {
+        val weatherResult = getCurrentWeatherUseCase(lat, lon)
+        if (weatherResult is Result.Success) {
+            val weather = weatherResult.data
+            _uiState.update { state ->
+                state.copy(
+                    city = weather.city,
+                    temp = "${weather.temp}°",
+                    condition = weather.condition,
+                    weatherError = null
+                )
+            }
+        }
+        if (weatherResult is Result.Error) {
+            _uiState.update { state ->
+                state.copy(
+                    weatherError = weatherResult.error.toUiText()
+                )
+            }
         }
     }
 }
