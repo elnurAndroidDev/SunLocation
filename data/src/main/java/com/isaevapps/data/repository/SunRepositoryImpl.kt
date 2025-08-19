@@ -4,8 +4,9 @@ import com.isaevapps.data.algorithm.SunCalculator
 import com.isaevapps.domain.model.SunPosition
 import com.isaevapps.domain.repository.SunRepository
 import java.time.LocalDateTime
+import javax.inject.Inject
 
-class SunRepositoryImpl(
+class SunRepositoryImpl @Inject constructor(
     private val sunCalculator: SunCalculator
 ): SunRepository {
     override suspend fun getSunPosition(

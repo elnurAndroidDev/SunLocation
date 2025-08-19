@@ -3,10 +3,10 @@ package com.isaevapps.data.repository
 import com.isaevapps.domain.model.TimeZone
 import com.isaevapps.domain.repository.TimeZoneRepository
 import java.util.Locale
+import javax.inject.Inject
 import kotlin.math.abs
 
-class ResourceTimeZoneRepository(
-): TimeZoneRepository {
+class ResourceTimeZoneRepository @Inject constructor() : TimeZoneRepository {
     override val timeZones = TimeZones.utcList.map { TimeZone(it) }
 
     override fun getSystemUtc(): TimeZone {

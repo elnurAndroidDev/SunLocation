@@ -7,8 +7,9 @@ import com.isaevapps.domain.model.Weather
 import com.isaevapps.domain.repository.WeatherRepository
 import com.isaevapps.domain.result.NetworkError
 import com.isaevapps.domain.result.Result
+import javax.inject.Inject
 
-class WeatherRepositoryImpl(
+class WeatherRepositoryImpl @Inject constructor(
     private val weatherApi: WeatherApi
 ) : WeatherRepository {
     override suspend fun getWeather(

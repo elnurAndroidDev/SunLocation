@@ -5,13 +5,8 @@ import com.isaevapps.data.algorithm.SunCalculator
 import com.isaevapps.data.location.LocationDataSource
 import com.isaevapps.data.network.ApiKeyQueryInterceptor
 import com.isaevapps.data.network.WeatherApi
-import com.isaevapps.data.repository.LocationRepositoryImpl
-import com.isaevapps.data.repository.ResourceTimeZoneRepository
-import com.isaevapps.data.repository.SunRepositoryImpl
-import com.isaevapps.data.repository.WeatherRepositoryImpl
 import com.isaevapps.domain.repository.LocationRepository
 import com.isaevapps.domain.repository.SunRepository
-import com.isaevapps.domain.repository.TimeZoneRepository
 import com.isaevapps.domain.repository.WeatherRepository
 import com.isaevapps.domain.usecase.CalculateSunPositionUseCase
 import com.isaevapps.domain.usecase.ExtractCoordinatesUseCase
@@ -53,12 +48,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideWeatherRepository(weatherApi: WeatherApi): WeatherRepository {
-        return WeatherRepositoryImpl(weatherApi)
-    }
-
-    @Provides
-    @Singleton
     fun provideGetCurrentWeatherUseCase(repository: WeatherRepository): GetCurrentWeatherUseCase {
         return GetCurrentWeatherUseCase(repository)
     }
@@ -71,15 +60,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideLocationRepository(locationDataSource: LocationDataSource): LocationRepository {
-        return LocationRepositoryImpl(locationDataSource)
+    fun provideGetCurrentLocationUseCase(repository: LocationRepository): GetCurrentLocationUseCase {
+        return GetCurrentLocationUseCase(repository)
     }
 
     @Provides
     @Singleton
-    fun provideGetCurrentLocationUseCase(repository: LocationRepository): GetCurrentLocationUseCase {
-        return GetCurrentLocationUseCase(repository)
-    }
+    fun provideSunCalculator(): SunCalculator = SunCalculator
 
     @Provides
     @Singleton
@@ -94,27 +81,10 @@ object AppModule {
     }
 
     @Provides
-    fun provideSunCalculator(): SunCalculator = SunCalculator
-
-    @Provides
-    @Singleton
-    fun provideSunRepository(sunCalculator: SunCalculator): SunRepository {
-        return SunRepositoryImpl(sunCalculator)
-    }
-
-    @Provides
-    @Singleton
-    fun provideTimeZonesRepository(): TimeZoneRepository {
-        return ResourceTimeZoneRepository()
-    }
-
-    @Provides
     @Singleton
     fun provideCalculateSunPositionUseCase(
         repository: SunRepository, dispatchers: AppDispatchers
     ): CalculateSunPositionUseCase {
         return CalculateSunPositionUseCase(repository, dispatchers.default)
     }
-
-
 }
