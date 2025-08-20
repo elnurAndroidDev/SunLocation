@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,8 +41,14 @@ fun AppTextField(
                 onValueChange = { if (!readOnly) onValueChange(it) },
                 readOnly = readOnly,
                 isError = errorText != null,
-                placeholder = { Text(placeholderText) },
+                placeholder = {
+                    Text(
+                        placeholderText,
+                        color = MaterialTheme.appColors.onBackground
+                    )
+                },
                 label = { Text(label, color = MaterialTheme.appColors.onBackground) },
+                textStyle = TextStyle(color = MaterialTheme.appColors.onBackground),
                 colors = TextFieldDefaults.colors(
                     focusedTextColor = MaterialTheme.appColors.onBackground,
                     unfocusedTextColor = MaterialTheme.appColors.onBackground,
@@ -49,9 +56,10 @@ fun AppTextField(
                     unfocusedContainerColor = Color.Transparent,
                     errorContainerColor = Color.Transparent,
                     disabledContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent
+                    focusedIndicatorColor = MaterialTheme.appColors.onBackground,
+                    unfocusedIndicatorColor = MaterialTheme.appColors.onBackground,
+                    disabledIndicatorColor = MaterialTheme.appColors.onBackground,
+                    errorIndicatorColor = Color.Red
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
