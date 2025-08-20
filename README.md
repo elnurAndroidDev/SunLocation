@@ -7,8 +7,8 @@ Built with modern Android technologies and clean architecture principles.
 
 ## 📱 Screenshots
 <p align="center">
-  <img src="screenshots/main.png" alt="Main screen" width="30%" />
-  <img src="screenshots/calculate.png" alt="Calculate screen" width="30%" />
+  <img src="screenshots/main.jpg" alt="Main screen" width="30%" />
+  <img src="screenshots/calculate.jpg" alt="Calculate screen" width="30%" />
 </p>
 
 ## ✨ Features
