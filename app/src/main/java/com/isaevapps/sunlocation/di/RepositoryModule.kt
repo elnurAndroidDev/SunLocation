@@ -1,9 +1,11 @@
 package com.isaevapps.sunlocation.di
 
+import com.isaevapps.data.repository.CompassRepositoryImpl
 import com.isaevapps.data.repository.LocationRepositoryImpl
 import com.isaevapps.data.repository.ResourceTimeZoneRepository
 import com.isaevapps.data.repository.SunRepositoryImpl
 import com.isaevapps.data.repository.WeatherRepositoryImpl
+import com.isaevapps.domain.repository.CompassRepository
 import com.isaevapps.domain.repository.LocationRepository
 import com.isaevapps.domain.repository.SunRepository
 import com.isaevapps.domain.repository.TimeZoneRepository
@@ -42,4 +44,9 @@ abstract class RepositoryModule {
         impl: ResourceTimeZoneRepository
     ): TimeZoneRepository
 
+    @Binds
+    @Singleton
+    abstract fun bindCompassRepository(
+        impl: CompassRepositoryImpl
+    ): CompassRepository
 }

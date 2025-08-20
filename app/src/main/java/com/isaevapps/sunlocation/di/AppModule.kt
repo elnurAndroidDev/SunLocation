@@ -5,6 +5,7 @@ import com.isaevapps.data.algorithm.SunCalculator
 import com.isaevapps.data.location.LocationDataSource
 import com.isaevapps.data.network.ApiKeyQueryInterceptor
 import com.isaevapps.data.network.WeatherApi
+import com.isaevapps.domain.repository.CompassRepository
 import com.isaevapps.domain.repository.LocationRepository
 import com.isaevapps.domain.repository.SunRepository
 import com.isaevapps.domain.repository.WeatherRepository
@@ -12,6 +13,7 @@ import com.isaevapps.domain.usecase.CalculateSunPositionUseCase
 import com.isaevapps.domain.usecase.ExtractCoordinatesUseCase
 import com.isaevapps.domain.usecase.GetCurrentLocationUseCase
 import com.isaevapps.domain.usecase.GetCurrentWeatherUseCase
+import com.isaevapps.domain.usecase.ObserveCompassUseCase
 import com.isaevapps.domain.utils.CoordinatesParser
 import com.isaevapps.domain.utils.DefaultCoordinatesParser
 import dagger.Module
@@ -86,5 +88,11 @@ object AppModule {
         repository: SunRepository, dispatchers: AppDispatchers
     ): CalculateSunPositionUseCase {
         return CalculateSunPositionUseCase(repository, dispatchers.default)
+    }
+
+    @Provides
+    @Singleton
+    fun provideObserveCompassUseCase(compassRepository: CompassRepository): ObserveCompassUseCase {
+        return ObserveCompassUseCase(compassRepository)
     }
 }

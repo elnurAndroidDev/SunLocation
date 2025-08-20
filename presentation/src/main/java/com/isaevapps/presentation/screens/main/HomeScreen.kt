@@ -5,6 +5,10 @@ package com.isaevapps.presentation.screens.main
 import android.Manifest
 import android.content.res.Configuration
 import android.util.Log
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,7 +32,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -54,8 +62,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
     val locationPermissionsState = rememberMultiplePermissionsState(
         permissions = listOf(
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
+            Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION
         )
     )
 
@@ -78,8 +85,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
 @Composable
 fun HomeScreenContent(
-    state: HomeUiState,
-    modifier: Modifier = Modifier
+    state: HomeUiState, modifier: Modifier = Modifier
 ) {
     Box(
         modifier
@@ -93,8 +99,7 @@ fun HomeScreenContent(
             Text(
                 text = stringResource(R.string.sun_position),
                 style = MaterialTheme.typography.titleLarge.copy(
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.appColors.onBackground
+                    fontWeight = FontWeight.SemiBold, color = MaterialTheme.appColors.onBackground
                 ),
                 modifier = Modifier.alpha(0.95f)
             )
@@ -126,12 +131,9 @@ fun HomeScreenContent(
                             )
                         }
                         Text(
-                            state.temp,
-                            style = MaterialTheme.typography.titleLarge.copy(
+                            state.temp, style = MaterialTheme.typography.titleLarge.copy(
                                 color = MaterialTheme.appColors.onBackground
-                            ),
-                            modifier = Modifier.weight(1f),
-                            textAlign = TextAlign.Center
+                            ), modifier = Modifier.weight(1f), textAlign = TextAlign.Center
                         )
                         Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
                             Text(
@@ -184,6 +186,25 @@ fun HomeScreenContent(
                             icon = null,
                         )
                     }
+                }
+            }
+
+            GlassCard {
+                Box(contentAlignment = Alignment.Center) {
+                    Image(
+                        painter = painterResource(R.drawable.compass),
+                        contentDescription = null,
+                        colorFilter = if (isSystemInDarkTheme()) ColorFilter.tint(Color.White) else null
+                    )
+                    val rotation by animateFloatAsState(
+                        targetValue = -state.compassAzimuth,
+                        animationSpec = tween(durationMillis = 100), label = ""
+                    )
+                    Image(
+                        painter = painterResource(R.drawable.arrow),
+                        contentDescription = null,
+                        modifier = Modifier.rotate(rotation)
+                    )
                 }
             }
         }

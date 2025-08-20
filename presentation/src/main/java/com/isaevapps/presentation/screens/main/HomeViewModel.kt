@@ -8,6 +8,7 @@ import com.isaevapps.domain.result.Result
 import com.isaevapps.domain.usecase.CalculateSunPositionUseCase
 import com.isaevapps.domain.usecase.GetCurrentLocationUseCase
 import com.isaevapps.domain.usecase.GetCurrentWeatherUseCase
+import com.isaevapps.domain.usecase.ObserveCompassUseCase
 import com.isaevapps.presentation.utils.toUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,6 +27,7 @@ class HomeViewModel @Inject constructor(
     private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
     private val getCurrentLocationUseCase: GetCurrentLocationUseCase,
     private val calculateSunPositionUseCase: CalculateSunPositionUseCase,
+    private val observeCompassUseCase: ObserveCompassUseCase,
     timeZoneRepository: TimeZoneRepository
 ) : ViewModel() {
 
@@ -37,6 +39,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         collectLocation()
+        collectCompass()
     }
 
     fun collectLocation() {
@@ -97,6 +100,14 @@ class HomeViewModel @Inject constructor(
                 state.copy(
                     weatherError = weatherResult.error.toUiText()
                 )
+            }
+        }
+    }
+
+    private fun collectCompass() = viewModelScope.launch {
+        observeCompassUseCase().collect { compass ->
+            _uiState.update {
+                it.copy(compassAzimuth = compass.azimuth)
             }
         }
     }

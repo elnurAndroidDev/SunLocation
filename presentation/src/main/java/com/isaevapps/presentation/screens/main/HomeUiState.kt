@@ -10,5 +10,6 @@ data class HomeUiState(
     val azimuth: String = "",
     val altitude: String = "",
     val updated: String = "",
+    val compassAzimuth: Float = 0f,
     val weatherError: UiText? = null
 )
