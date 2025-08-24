@@ -14,9 +14,10 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 class CompassRepositoryImpl @Inject constructor(
-    @ApplicationContext
+    @param:ApplicationContext
     private val context: Context
 ) : CompassRepository {
 
@@ -36,7 +37,6 @@ class CompassRepositoryImpl @Inject constructor(
             override fun onSensorChanged(event: SensorEvent) {
                 SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
                 SensorManager.getOrientation(rotationMatrix, orientation)
-                // orientation[0] = азимут в радианах (-π..π). Переводим в градусы 0..360
                 var azimuth = Math.toDegrees(orientation[0].toDouble()).toFloat()
                 if (azimuth < 0) azimuth += 360f
                 trySend(azimuth)
@@ -53,17 +53,15 @@ class CompassRepositoryImpl @Inject constructor(
 
         awaitClose { sensorManager.unregisterListener(listener) }
     }
-        .map { CompassData(smooth(it)) }
+        .map { CompassData(smooth(it).roundToInt()) }
         .distinctUntilChanged()
 
-    // Простое сглаживание (экспоненциальное)
     private var last: Float? = null
     private fun smooth(value: Float, alpha: Float = 0.12f): Float {
         val prev = last
         val out = if (prev == null) value else {
-            // учитываем переход 359->0
             val delta = angleDelta(prev, value)
-            normalize(prev + alpha * delta)
+            prev + alpha * delta
         }
         last = out
         return out
@@ -74,7 +72,5 @@ class CompassRepositoryImpl @Inject constructor(
         if (d < -180f) d += 360f
         return d
     }
-
-    private fun normalize(a: Float) = ((a % 360f) + 360f) % 360f
 
 }

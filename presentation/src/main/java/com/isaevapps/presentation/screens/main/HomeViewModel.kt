@@ -1,5 +1,6 @@
 package com.isaevapps.presentation.screens.main
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.isaevapps.domain.model.Location
@@ -104,10 +105,14 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    @SuppressLint("DefaultLocale")
     private fun collectCompass() = viewModelScope.launch {
         observeCompassUseCase().collect { compass ->
-            _uiState.update {
-                it.copy(compassAzimuth = compass.azimuth)
+            _uiState.update { state ->
+                state.copy(
+                    compassAzimuth = ((compass.azimuth + 360) % 360).toString(),
+                    compassRotation = -compass.azimuth
+                )
             }
         }
     }

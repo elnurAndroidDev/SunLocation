@@ -32,9 +32,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -190,21 +190,33 @@ fun HomeScreenContent(
             }
 
             GlassCard {
-                Box(contentAlignment = Alignment.Center) {
-                    Image(
-                        painter = painterResource(R.drawable.compass),
-                        contentDescription = null,
-                        colorFilter = if (isSystemInDarkTheme()) ColorFilter.tint(Color.White) else null
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Text(
+                        state.compassAzimuth,
+                        style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.appColors.onBackground),
                     )
-                    val rotation by animateFloatAsState(
-                        targetValue = -state.compassAzimuth,
-                        animationSpec = tween(durationMillis = 100), label = ""
-                    )
-                    Image(
-                        painter = painterResource(R.drawable.arrow),
-                        contentDescription = null,
-                        modifier = Modifier.rotate(rotation)
-                    )
+                    Box(contentAlignment = Alignment.Center, modifier = Modifier.size(300.dp)) {
+                        Image(
+                            painter = painterResource(R.drawable.compass),
+                            contentDescription = null,
+                            colorFilter = if (isSystemInDarkTheme()) ColorFilter.tint(Color.White) else null
+                        )
+                        val rotation by animateFloatAsState(
+                            targetValue = state.compassRotation.toFloat(),
+                            animationSpec = tween(),
+                            label = ""
+                        )
+                        Image(
+                            painter = painterResource(R.drawable.arrow),
+                            contentDescription = null,
+                            modifier = Modifier.graphicsLayer {
+                                rotationZ = rotation
+                            }
+                        )
+                    }
                 }
             }
         }
