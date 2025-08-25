@@ -1,11 +1,12 @@
-package com.isaevapps.domain.usecase
+package com.isaevapps.data.usecase
 
+import com.isaevapps.data.utils.DefaultCoordinatesParser
 import com.isaevapps.domain.model.Coordinates
 import com.isaevapps.domain.result.CoordinatesError
-import com.isaevapps.domain.utils.DefaultCoordinatesParser
 import com.isaevapps.domain.result.Result
+import com.isaevapps.domain.usecase.ExtractCoordinatesUseCase
+import org.junit.Assert
 import org.junit.Test
-import org.junit.Assert.assertEquals
 
 class ExtractCoordinatesUseCaseTest {
 
@@ -18,7 +19,7 @@ class ExtractCoordinatesUseCaseTest {
         val successResult: Result<Coordinates, CoordinatesError> =
             Result.Success(expectedCoordinates)
         val actualResult = useCase.invoke(validCoordinatesString)
-        assertEquals(successResult, actualResult)
+        Assert.assertEquals(successResult, actualResult)
     }
 
     @Test
@@ -28,7 +29,7 @@ class ExtractCoordinatesUseCaseTest {
         val successResult: Result<Coordinates, CoordinatesError> =
             Result.Success(expectedCoordinates)
         val actualResult = useCase.invoke(validCoordinatesString)
-        assertEquals(successResult, actualResult)
+        Assert.assertEquals(successResult, actualResult)
     }
 
     @Test
@@ -37,7 +38,7 @@ class ExtractCoordinatesUseCaseTest {
         val errorResult: Result<Coordinates, CoordinatesError> =
             Result.Error(CoordinatesError.INVALID_LATITUDE)
         val actualResult = useCase.invoke(invalidCoordinatesString)
-        assertEquals(errorResult, actualResult)
+        Assert.assertEquals(errorResult, actualResult)
     }
 
     @Test
@@ -46,7 +47,7 @@ class ExtractCoordinatesUseCaseTest {
         val errorResult: Result<Coordinates, CoordinatesError> =
             Result.Error(CoordinatesError.INVALID_LONGITUDE)
         val actualResult = useCase.invoke(invalidCoordinatesString)
-        assertEquals(errorResult, actualResult)
+        Assert.assertEquals(errorResult, actualResult)
     }
 
     @Test
@@ -55,7 +56,7 @@ class ExtractCoordinatesUseCaseTest {
         val errorResult: Result<Coordinates, CoordinatesError> =
             Result.Error(CoordinatesError.TWO_COORDINATES)
         val actualResult = useCase.invoke(emptyCoordinatesString)
-        assertEquals(errorResult, actualResult)
+        Assert.assertEquals(errorResult, actualResult)
     }
 
     @Test
@@ -64,7 +65,7 @@ class ExtractCoordinatesUseCaseTest {
         val errorResult: Result<Coordinates, CoordinatesError> =
             Result.Error(CoordinatesError.INVALID_LATITUDE)
         val actualResult = useCase.invoke(invalidCoordinatesString)
-        assertEquals(errorResult, actualResult)
+        Assert.assertEquals(errorResult, actualResult)
     }
 
     @Test
@@ -73,7 +74,7 @@ class ExtractCoordinatesUseCaseTest {
         val errorResult: Result<Coordinates, CoordinatesError> =
             Result.Error(CoordinatesError.INVALID_LATITUDE)
         val actualResult = useCase.invoke(invalidCoordinatesString)
-        assertEquals(errorResult, actualResult)
+        Assert.assertEquals(errorResult, actualResult)
     }
 
     @Test
@@ -82,7 +83,7 @@ class ExtractCoordinatesUseCaseTest {
         val errorResult: Result<Coordinates, CoordinatesError> =
             Result.Error(CoordinatesError.INVALID_LONGITUDE)
         val actualResult = useCase.invoke(invalidCoordinatesString)
-        assertEquals(errorResult, actualResult)
+        Assert.assertEquals(errorResult, actualResult)
     }
 
     @Test
@@ -91,7 +92,7 @@ class ExtractCoordinatesUseCaseTest {
         val errorResult: Result<Coordinates, CoordinatesError> =
             Result.Error(CoordinatesError.INVALID_LONGITUDE)
         val actualResult = useCase.invoke(invalidCoordinatesString)
-        assertEquals(errorResult, actualResult)
+        Assert.assertEquals(errorResult, actualResult)
     }
 
     @Test
@@ -100,15 +101,16 @@ class ExtractCoordinatesUseCaseTest {
         val errorResult: Result<Coordinates, CoordinatesError> =
             Result.Error(CoordinatesError.TWO_COORDINATES)
         val actualResult = useCase.invoke(invalidCoordinatesString)
-        assertEquals(errorResult, actualResult)
+        Assert.assertEquals(errorResult, actualResult)
     }
+
     @Test
     fun `too many coordinate parts`() {
         val invalidCoordinatesString = "12.34,56.78,90.12"
         val errorResult: Result<Coordinates, CoordinatesError> =
             Result.Error(CoordinatesError.TWO_COORDINATES)
         val actualResult = useCase.invoke(invalidCoordinatesString)
-        assertEquals(errorResult, actualResult)
+        Assert.assertEquals(errorResult, actualResult)
     }
 
     @Test
@@ -118,7 +120,7 @@ class ExtractCoordinatesUseCaseTest {
         val successResult: Result<Coordinates, CoordinatesError> =
             Result.Success(expectedCoordinates)
         val actualResult = useCase.invoke(coordinatesStringWithWhitespace)
-        assertEquals(successResult, actualResult)
+        Assert.assertEquals(successResult, actualResult)
     }
 
     @Test
@@ -128,8 +130,8 @@ class ExtractCoordinatesUseCaseTest {
         val actualResult = useCase.invoke(validCoordinatesString)
         val lat = (actualResult as Result.Success).data.latitude
         val lon = (actualResult as Result.Success).data.longitude
-        assertEquals(lat, expectedCoordinates.latitude, 0.0001)
-        assertEquals(lon, expectedCoordinates.longitude, 0.0001)
+        Assert.assertEquals(lat, expectedCoordinates.latitude, 0.0001)
+        Assert.assertEquals(lon, expectedCoordinates.longitude, 0.0001)
     }
 
     @Test
@@ -138,7 +140,7 @@ class ExtractCoordinatesUseCaseTest {
         val errorResult: Result<Coordinates, CoordinatesError> =
             Result.Error(CoordinatesError.INVALID_LATITUDE)
         val actualResult = useCase.invoke(invalidCoordinatesString)
-        assertEquals(errorResult, actualResult)
+        Assert.assertEquals(errorResult, actualResult)
     }
 
     @Test
@@ -147,7 +149,7 @@ class ExtractCoordinatesUseCaseTest {
         val errorResult: Result<Coordinates, CoordinatesError> =
             Result.Error(CoordinatesError.INVALID_LONGITUDE)
         val actualResult = useCase.invoke(invalidCoordinatesString)
-        assertEquals(errorResult, actualResult)
+        Assert.assertEquals(errorResult, actualResult)
     }
 
     @Test
@@ -156,7 +158,7 @@ class ExtractCoordinatesUseCaseTest {
         val errorResult: Result<Coordinates, CoordinatesError> =
             Result.Error(CoordinatesError.INVALID_LATITUDE)
         val actualResult = useCase.invoke(invalidCoordinatesString)
-        assertEquals(errorResult, actualResult)
+        Assert.assertEquals(errorResult, actualResult)
     }
 
     @Test
@@ -165,7 +167,7 @@ class ExtractCoordinatesUseCaseTest {
         val errorResult: Result<Coordinates, CoordinatesError> =
             Result.Error(CoordinatesError.INVALID_LATITUDE)
         val actualResult = useCase.invoke(invalidCoordinatesString)
-        assertEquals(errorResult, actualResult)
+        Assert.assertEquals(errorResult, actualResult)
     }
 
     @Test
@@ -174,7 +176,7 @@ class ExtractCoordinatesUseCaseTest {
         val errorResult: Result<Coordinates, CoordinatesError> =
             Result.Error(CoordinatesError.INVALID_LONGITUDE)
         val actualResult = useCase.invoke(invalidCoordinatesString)
-        assertEquals(errorResult, actualResult)
+        Assert.assertEquals(errorResult, actualResult)
     }
 
     @Test
@@ -183,17 +185,18 @@ class ExtractCoordinatesUseCaseTest {
         val errorResult: Result<Coordinates, CoordinatesError> =
             Result.Error(CoordinatesError.INVALID_LONGITUDE)
         val actualResult = useCase.invoke(invalidCoordinatesString)
-        assertEquals(errorResult, actualResult)
+        Assert.assertEquals(errorResult, actualResult)
     }
 
     @Test
     fun `NSEW leading trailing whitespace`() {
         val coordinatesStringWithWhitespace = "  40°26'46\"N, 79°58'56\"W  "
         val expectedCoordinates = Coordinates(40.446111, -79.982222)
-        val actualResult: Result<Coordinates, CoordinatesError> = useCase.invoke(coordinatesStringWithWhitespace)
+        val actualResult: Result<Coordinates, CoordinatesError> =
+            useCase.invoke(coordinatesStringWithWhitespace)
         val lat = (actualResult as Result.Success).data.latitude
         val lon = (actualResult as Result.Success).data.longitude
-        assertEquals(lat, expectedCoordinates.latitude, 0.0001)
-        assertEquals(lon, expectedCoordinates.longitude, 0.0001)
+        Assert.assertEquals(lat, expectedCoordinates.latitude, 0.0001)
+        Assert.assertEquals(lon, expectedCoordinates.longitude, 0.0001)
     }
 }
