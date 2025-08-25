@@ -5,12 +5,21 @@ import com.isaevapps.domain.model.Coordinates
 import com.isaevapps.domain.result.CoordinatesError
 import com.isaevapps.domain.result.Result
 import com.isaevapps.domain.usecase.ExtractCoordinatesUseCase
+import com.isaevapps.domain.utils.CoordinatesParser
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
 
 class ExtractCoordinatesUseCaseTest {
 
-    private val useCase = ExtractCoordinatesUseCase(DefaultCoordinatesParser())
+    private lateinit var parser: CoordinatesParser
+    private lateinit var useCase: ExtractCoordinatesUseCase
+
+    @Before
+    fun setUp() {
+        parser = DefaultCoordinatesParser()
+        useCase = ExtractCoordinatesUseCase(parser)
+    }
 
     @Test
     fun `valid coordinates string`() {
@@ -129,7 +138,7 @@ class ExtractCoordinatesUseCaseTest {
         val expectedCoordinates = Coordinates(40.446111, -79.982222)
         val actualResult = useCase.invoke(validCoordinatesString)
         val lat = (actualResult as Result.Success).data.latitude
-        val lon = (actualResult as Result.Success).data.longitude
+        val lon = actualResult.data.longitude
         Assert.assertEquals(lat, expectedCoordinates.latitude, 0.0001)
         Assert.assertEquals(lon, expectedCoordinates.longitude, 0.0001)
     }
@@ -195,7 +204,7 @@ class ExtractCoordinatesUseCaseTest {
         val actualResult: Result<Coordinates, CoordinatesError> =
             useCase.invoke(coordinatesStringWithWhitespace)
         val lat = (actualResult as Result.Success).data.latitude
-        val lon = (actualResult as Result.Success).data.longitude
+        val lon = actualResult.data.longitude
         Assert.assertEquals(lat, expectedCoordinates.latitude, 0.0001)
         Assert.assertEquals(lon, expectedCoordinates.longitude, 0.0001)
     }
