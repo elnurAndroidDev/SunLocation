@@ -1,8 +1,6 @@
 package com.isaevapps.sunlocation.di
 
-import android.content.Context
 import com.isaevapps.data.algorithm.SunCalculator
-import com.isaevapps.data.location.LocationDataSource
 import com.isaevapps.data.network.ApiKeyQueryInterceptor
 import com.isaevapps.data.network.WeatherApi
 import com.isaevapps.data.utils.DefaultCoordinatesParser
@@ -19,7 +17,6 @@ import com.isaevapps.domain.utils.CoordinatesParser
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -52,12 +49,6 @@ object AppModule {
     @Singleton
     fun provideGetCurrentWeatherUseCase(repository: WeatherRepository): GetCurrentWeatherUseCase {
         return GetCurrentWeatherUseCase(repository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideLocationDataSource(@ApplicationContext context: Context): LocationDataSource {
-        return LocationDataSource(context)
     }
 
     @Provides
