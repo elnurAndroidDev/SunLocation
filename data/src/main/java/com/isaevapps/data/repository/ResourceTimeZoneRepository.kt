@@ -5,12 +5,13 @@ import com.isaevapps.domain.repository.TimeZoneRepository
 import java.util.Locale
 import javax.inject.Inject
 import kotlin.math.abs
+import java.util.TimeZone as SystemTimeZome
 
 class ResourceTimeZoneRepository @Inject constructor() : TimeZoneRepository {
     override val timeZones = utcList.map { TimeZone(it) }
 
     override fun getSystemUtc(): TimeZone {
-            val timeZone = java.util.TimeZone.getDefault()
+        val timeZone = SystemTimeZome.getDefault()
             val offsetInMillis = timeZone.rawOffset
             val hours = offsetInMillis / (1000 * 60 * 60)
             val minutes = (offsetInMillis / (1000 * 60)) % 60

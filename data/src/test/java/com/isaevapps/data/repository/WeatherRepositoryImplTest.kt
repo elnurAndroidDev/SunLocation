@@ -1,9 +1,10 @@
+package com.isaevapps.data.repository
+
 import com.isaevapps.data.network.ConditionDTO
 import com.isaevapps.data.network.CurrentDTO
 import com.isaevapps.data.network.LocationDTO
 import com.isaevapps.data.network.WeatherApi
 import com.isaevapps.data.network.WeatherDTO
-import com.isaevapps.data.repository.WeatherRepositoryImpl
 import com.isaevapps.data.toDomain
 import com.isaevapps.domain.model.Weather
 import com.isaevapps.domain.result.NetworkError
@@ -11,7 +12,6 @@ import com.isaevapps.domain.result.Result
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.IOException
@@ -23,7 +23,6 @@ import retrofit2.HttpException
 import retrofit2.Response
 import java.net.SocketTimeoutException
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class WeatherRepositoryImplTest {
 
     private lateinit var weatherApi: WeatherApi

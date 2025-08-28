@@ -1,6 +1,7 @@
+package com.isaevapps.domain.usecase
+
 import com.isaevapps.domain.model.SunPosition
 import com.isaevapps.domain.repository.SunRepository
-import com.isaevapps.domain.usecase.CalculateSunPositionUseCase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

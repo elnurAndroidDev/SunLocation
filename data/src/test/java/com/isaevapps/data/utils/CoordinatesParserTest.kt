@@ -1,4 +1,5 @@
-import com.isaevapps.data.utils.DefaultCoordinatesParser
+package com.isaevapps.data.utils
+
 import com.isaevapps.domain.model.Coordinates
 import com.isaevapps.domain.result.CoordinatesError
 import com.isaevapps.domain.result.Result

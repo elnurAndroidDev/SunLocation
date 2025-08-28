@@ -1,5 +1,7 @@
 package com.isaevapps.data.repository
 
+import io.mockk.every
+import io.mockk.mockkStatic
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -14,6 +16,25 @@ class ResourceTimeZoneRepositoryTest {
     @Before
     fun setUp() {
         repository = ResourceTimeZoneRepository()
+    }
+
+    @Test
+    fun `utcList is not empty`() {
+        assertTrue(ResourceTimeZoneRepository.utcList.isNotEmpty())
+    }
+
+    @Test
+    fun `getSystemUtc returns first timezone if no match found`() {
+        // given
+        mockkStatic(TimeZone::class)
+        val fakeTimeZone = TimeZone.getTimeZone("GMT+13:37")
+        every { TimeZone.getDefault() } returns fakeTimeZone
+
+        // when
+        val result = repository.getSystemUtc()
+
+        // then
+        assertEquals(repository.timeZones[0], result)
     }
 
     @Test

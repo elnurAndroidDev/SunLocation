@@ -7,11 +7,12 @@ import com.isaevapps.domain.model.SunPosition
 import com.isaevapps.domain.model.TimeZone
 import com.isaevapps.domain.repository.TimeZoneRepository
 import com.isaevapps.domain.result.CoordinatesError
+import com.isaevapps.domain.result.Result
+import com.isaevapps.domain.result.Result.Success
 import com.isaevapps.domain.usecase.CalculateSunPositionUseCase
 import com.isaevapps.domain.usecase.ExtractCoordinatesUseCase
 import com.isaevapps.presentation.utils.toStringFormatted
 import com.isaevapps.presentation.utils.toUiText
-import com.isaevapps.domain.result.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -79,8 +80,8 @@ class CalculateViewModel @Inject constructor(
                     val result = extractCoordinatesUseCase(input)
                     vmState.update { state ->
                         state.copy(
-                            coordinates = result.dataOrNull,
-                            invalidCoordinates = result.errorOrNull,
+                            coordinates = (result as? Success)?.data,
+                            invalidCoordinates = (result as? Result.Error)?.error,
                         )
                     }
                 }

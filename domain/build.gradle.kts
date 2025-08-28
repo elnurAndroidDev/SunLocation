@@ -1,6 +1,7 @@
 plugins {
     id("java-library")
     alias(libs.plugins.jetbrains.kotlin.jvm)
+    id("org.jetbrains.kotlinx.kover") version "0.8.3"
 }
 java {
     sourceCompatibility = JavaVersion.VERSION_11
