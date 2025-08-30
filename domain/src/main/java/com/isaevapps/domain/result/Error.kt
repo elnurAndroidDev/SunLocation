@@ -14,3 +14,7 @@ enum class NetworkError : Error {
     TIMEOUT,
     UNKNOWN
 }
+
+enum class LocationError : Error {
+    NOT_AVAILABLE
+}

@@ -1,8 +1,10 @@
 package com.isaevapps.presentation.utils
 
 import com.isaevapps.domain.result.CoordinatesError
+import com.isaevapps.domain.result.LocationError
 import com.isaevapps.domain.result.NetworkError
 import com.isaevapps.presentation.R
+import com.isaevapps.presentation.utils.UiText.StringResource
 
 fun CoordinatesError.toUiText(): UiText {
     return when (this) {
@@ -19,4 +21,11 @@ fun NetworkError.toUiText(): UiText {
         NetworkError.TIMEOUT -> UiText.StringResource(R.string.timeout)
         NetworkError.UNKNOWN -> UiText.StringResource(R.string.unknown_error)
     }
+}
+
+fun LocationError.toUiText(): UiText {
+    return when (this) {
+        LocationError.NOT_AVAILABLE -> StringResource(R.string.no_location)
+    }
+
 }

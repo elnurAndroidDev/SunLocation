@@ -205,13 +205,11 @@ fun CalculateScreenContent(
                     ) {
                         MetricPill(
                             title = stringResource(R.string.azimuth),
-                            value = state.azimuth,
-                            icon = null
+                            value = state.azimuth
                         )
                         MetricPill(
                             title = stringResource(R.string.altitude),
-                            value = state.altitude,
-                            icon = null
+                            value = state.altitude
                         )
                     }
                 }

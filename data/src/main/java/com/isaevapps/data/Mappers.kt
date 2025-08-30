@@ -10,7 +10,7 @@ fun WeatherDTO.toDomain(): Weather {
     return Weather(
         city = location.name,
         country = location.country,
-        temp = current.temp_c,
+        temp = current.temp_c.toInt(),
         condition = current.condition.text,
         localtime = LocalDateTime.parse(location.localtime, formatter),
         lastUpdated = LocalDateTime.parse(current.last_updated, formatter)

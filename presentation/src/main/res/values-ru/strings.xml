@@ -19,4 +19,5 @@
     <string name="azimuth">Азимут</string>
     <string name="altitude">Высота</string>
     <string name="sun_calculator">Вычисление положения</string>
+    <string name="no_location">Местоположение недоступно</string>
 </resources>

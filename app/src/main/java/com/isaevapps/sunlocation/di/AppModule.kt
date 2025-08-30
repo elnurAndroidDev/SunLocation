@@ -1,9 +1,11 @@
 package com.isaevapps.sunlocation.di
 
+import android.content.Context
 import com.isaevapps.data.algorithm.SunCalculator
 import com.isaevapps.data.network.ApiKeyQueryInterceptor
 import com.isaevapps.data.network.WeatherApi
 import com.isaevapps.data.utils.DefaultCoordinatesParser
+import com.isaevapps.data.utils.NetworkConnectivityObserver
 import com.isaevapps.domain.repository.CompassRepository
 import com.isaevapps.domain.repository.LocationRepository
 import com.isaevapps.domain.repository.SunRepository
@@ -14,9 +16,11 @@ import com.isaevapps.domain.usecase.GetCurrentLocationUseCase
 import com.isaevapps.domain.usecase.GetCurrentWeatherUseCase
 import com.isaevapps.domain.usecase.ObserveCompassUseCase
 import com.isaevapps.domain.utils.CoordinatesParser
+import com.isaevapps.domain.utils.NetworkMonitor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -26,6 +30,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    @Singleton
+    fun provideNetworkMonitor(@ApplicationContext context: Context): NetworkMonitor =
+        NetworkConnectivityObserver(context)
 
     @Provides
     @Singleton

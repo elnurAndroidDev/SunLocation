@@ -19,4 +19,5 @@
     <string name="azimuth">Azimuth</string>
     <string name="altitude">Altitude</string>
     <string name="sun_calculator">Calculate position</string>
+    <string name="no_location">Location unavailable</string>
 </resources>

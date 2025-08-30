@@ -1,27 +1,38 @@
 package com.isaevapps.presentation.screens.main
 
-import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.isaevapps.domain.model.Location
 import com.isaevapps.domain.repository.TimeZoneRepository
+import com.isaevapps.domain.result.LocationError
 import com.isaevapps.domain.result.Result
 import com.isaevapps.domain.usecase.CalculateSunPositionUseCase
 import com.isaevapps.domain.usecase.GetCurrentLocationUseCase
 import com.isaevapps.domain.usecase.GetCurrentWeatherUseCase
 import com.isaevapps.domain.usecase.ObserveCompassUseCase
+import com.isaevapps.domain.utils.NetworkMonitor
+import com.isaevapps.presentation.utils.tickerFlow
 import com.isaevapps.presentation.utils.toUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.stateIn
 import java.time.LocalDateTime
 import javax.inject.Inject
-import kotlin.math.roundToLong
+import kotlin.time.Duration.Companion.minutes
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -29,91 +40,110 @@ class HomeViewModel @Inject constructor(
     private val getCurrentLocationUseCase: GetCurrentLocationUseCase,
     private val calculateSunPositionUseCase: CalculateSunPositionUseCase,
     private val observeCompassUseCase: ObserveCompassUseCase,
+    networkMonitor: NetworkMonitor,
     timeZoneRepository: TimeZoneRepository
 ) : ViewModel() {
-
     private val systemUTC = timeZoneRepository.getSystemUtc().getUTCDouble()
-    private var preciseLocation: Location? = null
 
-    private val _uiState = MutableStateFlow(HomeUiState())
-    val uiState = _uiState.asStateFlow()
+    private val networkFlow = networkMonitor.observe()
 
-    init {
-        collectLocation()
-        collectCompass()
-    }
+    private val lastLocation: StateFlow<Result<Location, LocationError>?> =
+        getCurrentLocationUseCase()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = null
+            )
 
-    fun collectLocation() {
-        viewModelScope.launch {
-            getCurrentLocationUseCase()
-                .onEach {
-                    val lat = it.lat
-                    val lon = it.lon
-                    preciseLocation = Location(lat, lon)
-                    updateSunPosition(lat, lon)
-                }
-                .map {
-                    Location(
-                        lat = (it.lat * 1000).roundToLong() / 1000.0,
-                        lon = (it.lon * 1000).roundToLong() / 1000.0
-                    )
-                }
-                .distinctUntilChanged()
-                .collect {
-                    preciseLocation?.let {
-                        updateWeather(it.lat, it.lon)
-                    }
-                }
-        }
-    }
-
-    private fun updateSunPosition(lat: Double, lon: Double) = viewModelScope.launch {
-        val sunPosition = calculateSunPositionUseCase(
-            latitude = lat,
-            longitude = lon,
-            dateTime = LocalDateTime.now(),
-            utcOffset = systemUTC
-        )
-        _uiState.update { state ->
-            state.copy(
-                coords = "$lat, $lon",
-                azimuth = "${sunPosition.azimuth}°",
-                altitude = "${sunPosition.altitude}°"
+    private val compassFlow: Flow<CompassUiState> = observeCompassUseCase()
+        .map { compass ->
+            CompassUiState(
+                azimuth = (compass.azimuth + 360) % 360,
+                rotation = -compass.azimuth
             )
         }
-    }
 
-    private fun updateWeather(lat: Double, lon: Double) = viewModelScope.launch {
-        val weatherResult = getCurrentWeatherUseCase(lat, lon)
-        if (weatherResult is Result.Success) {
-            val weather = weatherResult.data
-            _uiState.update { state ->
-                state.copy(
-                    city = weather.city,
-                    temp = "${weather.temp}°",
-                    condition = weather.condition,
-                    weatherError = null
+    @OptIn(FlowPreview::class)
+    private val sunFlow: Flow<SunUiState> = lastLocation
+        .filterNotNull()
+        .map { resultLocation ->
+            Log.d("HomeViewModel", "sunFlow: $resultLocation")
+            if (resultLocation is Result.Success) {
+                val loc = resultLocation.data
+                val sun = calculateSunPositionUseCase(
+                    latitude = loc.lat,
+                    longitude = loc.lon,
+                    dateTime = LocalDateTime.now(),
+                    utcOffset = systemUTC
                 )
-            }
-        }
-        if (weatherResult is Result.Error) {
-            _uiState.update { state ->
-                state.copy(
-                    weatherError = weatherResult.error.toUiText()
+                uiState.value.sun.copy(
+                    coordinates = "${loc.lat}, ${loc.lon}",
+                    azimuth = "${sun.azimuth}°",
+                    altitude = "${sun.altitude}°",
+                    error = null
                 )
-            }
+            } else
+                uiState.value.sun.copy(
+                    error = (resultLocation as Result.Error).error.toUiText()
+                )
         }
-    }
 
-    @SuppressLint("DefaultLocale")
-    private fun collectCompass() = viewModelScope.launch {
-        observeCompassUseCase().collect { compass ->
-            _uiState.update { state ->
-                state.copy(
-                    compassAzimuth = ((compass.azimuth + 360) % 360).toString(),
-                    compassRotation = -compass.azimuth
+    private val weatherRefreshTriggers: Flow<Unit> =
+        merge(
+            flowOf(Unit),
+            networkFlow
+                .filter { it }
+                .map { },
+            tickerFlow(30.minutes)
+        )
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val weatherFlow: Flow<WeatherUiState> =
+        weatherRefreshTriggers.flatMapLatest {
+            flow {
+                emit(
+                    uiState.value.weather.copy(isLoading = true, error = null)
                 )
+
+                val locationResult = lastLocation.filter { it is Result.Success }.first()
+                val loc = (locationResult as Result.Success).data
+                when (val result = getCurrentWeatherUseCase(loc.lat, loc.lon)) {
+                    is Result.Success -> emit(
+                        WeatherUiState(
+                            city = result.data.city,
+                            temp = "${result.data.temp}°C",
+                            condition = result.data.condition,
+                            isLoading = false,
+                            error = null
+                        )
+                    )
+
+                    is Result.Error -> emit(
+                        uiState.value.weather.copy(
+                            isLoading = false,
+                            error = result.error.toUiText()
+                        )
+                    )
+                }
             }
         }
-    }
+
+
+    val uiState: StateFlow<HomeUiState> =
+        combine(
+            weatherFlow,
+            sunFlow,
+            compassFlow
+        ) { weather, sun, compass ->
+            HomeUiState(
+                weather = weather,
+                sun = sun,
+                compass = compass
+            )
+        }
+            .stateIn(
+                viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = HomeUiState()
+            )
 }
