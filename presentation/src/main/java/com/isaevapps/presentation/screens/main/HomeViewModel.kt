@@ -13,6 +13,7 @@ import com.isaevapps.domain.usecase.GetCurrentWeatherUseCase
 import com.isaevapps.domain.usecase.ObserveCompassUseCase
 import com.isaevapps.domain.utils.NetworkMonitor
 import com.isaevapps.presentation.utils.tickerFlow
+import com.isaevapps.presentation.utils.toUiData
 import com.isaevapps.presentation.utils.toUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -110,9 +111,7 @@ class HomeViewModel @Inject constructor(
                 when (val result = getCurrentWeatherUseCase(loc.lat, loc.lon)) {
                     is Result.Success -> emit(
                         WeatherUiState(
-                            city = result.data.city,
-                            temp = "${result.data.temp}°C",
-                            condition = result.data.condition,
+                            weatherUiData = result.data.toUiData(),
                             isLoading = false,
                             error = null
                         )

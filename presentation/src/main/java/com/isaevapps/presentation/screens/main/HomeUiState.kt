@@ -1,5 +1,6 @@
 package com.isaevapps.presentation.screens.main
 
+import com.isaevapps.presentation.screens.main.models.WeatherUiData
 import com.isaevapps.presentation.utils.UiText
 
 data class HomeUiState(
@@ -9,9 +10,7 @@ data class HomeUiState(
 )
 
 data class WeatherUiState(
-    val city: String = "-",
-    val temp: String = "-°C",
-    val condition: String = "-",
+    val weatherUiData: WeatherUiData = WeatherUiData(),
     val isLoading: Boolean = false,
     val error: UiText? = null
 )
