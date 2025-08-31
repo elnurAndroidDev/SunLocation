@@ -3,6 +3,8 @@ package com.isaevapps.data.repository
 import app.cash.turbine.test
 import com.isaevapps.data.location.LocationDataSource
 import com.isaevapps.domain.model.Location
+import com.isaevapps.domain.result.LocationError
+import com.isaevapps.domain.result.Result
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -29,14 +31,15 @@ class LocationRepositoryImplTest {
     fun `getCurrentLocation returns flow from datasource`() = runTest {
         // given
         val location = Location(lat = 55.75, lon = 37.62)
-        every { locationDataSource.flow() } returns flowOf(location)
+        val successResult: Result<Location, LocationError> = Result.Success(location)
+        every { locationDataSource.flow() } returns flowOf(successResult)
 
         // when
         val flow = repository.getCurrentLocation()
 
         // then
         flow.test {
-            assertEquals(location, awaitItem())
+            assertEquals(successResult, awaitItem())
             awaitComplete()
         }
 

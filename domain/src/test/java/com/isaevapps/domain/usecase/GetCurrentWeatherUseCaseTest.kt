@@ -30,7 +30,7 @@ class GetCurrentWeatherUseCaseTest {
         val lat = 55.75
         val lon = 37.62
         val expectedWeather =
-            Weather("City", "Country", 20.0, "Clear", LocalDateTime.now(), LocalDateTime.now())
+            Weather("City", "Country", 20, "Clear", LocalDateTime.now(), LocalDateTime.now())
         val expectedResult: Result<Weather, NetworkError> = Result.Success(expectedWeather)
         coEvery { repository.getWeather(lat, lon) } returns expectedResult
 
