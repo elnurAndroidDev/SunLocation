@@ -8,6 +8,5 @@ fun Weather.toUiData(): WeatherUiData {
         city = city,
         temp = "${temp}°C",
         condition = condition
-
     )
 }

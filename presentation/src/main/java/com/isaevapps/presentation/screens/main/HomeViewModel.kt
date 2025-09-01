@@ -1,6 +1,5 @@
 package com.isaevapps.presentation.screens.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.isaevapps.domain.model.Location
@@ -22,6 +21,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
@@ -68,7 +68,6 @@ class HomeViewModel @Inject constructor(
     private val sunFlow: Flow<SunUiState> = lastLocation
         .filterNotNull()
         .map { resultLocation ->
-            Log.d("HomeViewModel", "sunFlow: $resultLocation")
             if (resultLocation is Result.Success) {
                 val loc = resultLocation.data
                 val sun = calculateSunPositionUseCase(
@@ -94,6 +93,7 @@ class HomeViewModel @Inject constructor(
             flowOf(Unit),
             networkFlow
                 .filter { it }
+                .drop(1)
                 .map { },
             tickerFlow(30.minutes)
         )

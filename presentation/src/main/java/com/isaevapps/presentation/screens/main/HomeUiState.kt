@@ -4,7 +4,7 @@ import com.isaevapps.presentation.screens.main.models.WeatherUiData
 import com.isaevapps.presentation.utils.UiText
 
 data class HomeUiState(
-    val weather: WeatherUiState = WeatherUiState(isLoading = true),
+    val weather: WeatherUiState = WeatherUiState(),
     val sun: SunUiState = SunUiState(),
     val compass: CompassUiState = CompassUiState()
 )

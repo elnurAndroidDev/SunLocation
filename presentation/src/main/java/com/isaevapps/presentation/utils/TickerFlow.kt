@@ -7,7 +7,7 @@ import kotlin.time.Duration
 
 fun tickerFlow(period: Duration): Flow<Unit> = flow {
     while (true) {
-        emit(Unit)
         delay(period)
+        emit(Unit)
     }
 }

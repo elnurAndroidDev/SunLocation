@@ -117,6 +117,9 @@ fun HomeScreenContent(
 
 @Composable
 fun WeatherCard(state: WeatherUiState, modifier: Modifier = Modifier) {
+    val weather = state.weatherUiData
+    val error = state.error
+    val isLoading = state.isLoading
     GlassCard(modifier = modifier, padding = 0.dp) {
         Box(Modifier.fillMaxSize()) {
             Row(
@@ -138,41 +141,41 @@ fun WeatherCard(state: WeatherUiState, modifier: Modifier = Modifier) {
                     )
                     Spacer(Modifier.width(2.dp))
                     Text(
-                        text = state.city,
+                        text = weather.city,
                         style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.appColors.onBackground),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
                             .widthIn(min = 80.dp)
-                            .shimmer(visible = state.isLoading)
+                            .shimmer(visible = isLoading)
                     )
                 }
                 Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
                     Text(
-                        text = state.temp,
+                        text = weather.temp,
                         style = MaterialTheme.typography.titleLarge.copy(
                             color = MaterialTheme.appColors.onBackground
                         ),
                         modifier = Modifier
                             .widthIn(min = 30.dp)
-                            .shimmer(visible = state.isLoading),
+                            .shimmer(visible = isLoading),
                         textAlign = TextAlign.Center
                     )
                 }
                 Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
                     Text(
-                        state.condition,
+                        weather.condition,
                         style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.appColors.onBackground),
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .widthIn(min = 80.dp)
-                            .shimmer(visible = state.isLoading)
+                            .shimmer(visible = isLoading)
                     )
                 }
             }
-            if (state.error != null) {
+            if (error != null) {
                 Text(
-                    text = state.error.asString(LocalContext.current),
+                    text = error.asString(LocalContext.current),
                     fontSize = 12.sp,
                     color = MaterialTheme.appColors.onBackground,
                     modifier = Modifier.align(Alignment.BottomCenter)
