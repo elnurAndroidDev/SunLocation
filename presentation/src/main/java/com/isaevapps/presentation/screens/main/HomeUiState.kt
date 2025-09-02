@@ -16,9 +16,9 @@ data class WeatherUiState(
 )
 
 data class SunUiState(
-    val coordinates: String = "",
-    val azimuth: String = "",
-    val altitude: String = "",
+    val coordinates: String = "-",
+    val azimuth: String = "-",
+    val altitude: String = "-",
     val error: UiText? = null
 )
 

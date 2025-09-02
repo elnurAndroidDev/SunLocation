@@ -187,6 +187,7 @@ fun WeatherCard(state: WeatherUiState, modifier: Modifier = Modifier) {
 
 @Composable
 fun LocationCard(state: SunUiState, modifier: Modifier = Modifier) {
+    val shimmerVisible = state.error == null
     GlassCard(modifier = modifier, padding = 0.dp) {
         Box(modifier = Modifier.fillMaxSize()) {
             Column(Modifier
@@ -208,7 +209,7 @@ fun LocationCard(state: SunUiState, modifier: Modifier = Modifier) {
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
                             .widthIn(min = 120.dp)
-                            .shimmer(visible = state.coordinates.isBlank())
+                            .shimmer(visible = shimmerVisible)
                     )
                 }
                 Spacer(Modifier.height(12.dp))
@@ -219,12 +220,12 @@ fun LocationCard(state: SunUiState, modifier: Modifier = Modifier) {
                     MetricPill(
                         title = stringResource(R.string.azimuth),
                         value = state.azimuth,
-                        shimmerVisible = state.azimuth.isBlank()
+                        shimmerVisible = shimmerVisible
                     )
                     MetricPill(
                         title = stringResource(R.string.altitude),
                         value = state.altitude,
-                        shimmerVisible = state.altitude.isBlank()
+                        shimmerVisible = shimmerVisible
                     )
                 }
             }

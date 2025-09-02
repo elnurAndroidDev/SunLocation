@@ -8,18 +8,18 @@ import com.isaevapps.presentation.utils.UiText.StringResource
 
 fun CoordinatesError.toUiText(): UiText {
     return when (this) {
-        CoordinatesError.TWO_COORDINATES -> UiText.StringResource(R.string.two_values_error)
-        CoordinatesError.INVALID_LATITUDE -> UiText.StringResource(R.string.invalid_lat)
-        CoordinatesError.INVALID_LONGITUDE -> UiText.StringResource(R.string.invalid_lon)
+        CoordinatesError.TWO_COORDINATES -> StringResource(R.string.two_values_error)
+        CoordinatesError.INVALID_LATITUDE -> StringResource(R.string.invalid_lat)
+        CoordinatesError.INVALID_LONGITUDE -> StringResource(R.string.invalid_lon)
     }
 }
 
 fun NetworkError.toUiText(): UiText {
     return when (this) {
-        NetworkError.NO_INTERNET -> UiText.StringResource(R.string.no_internet)
-        NetworkError.SERVER_ERROR -> UiText.StringResource(R.string.server_error)
-        NetworkError.TIMEOUT -> UiText.StringResource(R.string.timeout)
-        NetworkError.UNKNOWN -> UiText.StringResource(R.string.unknown_error)
+        NetworkError.NO_INTERNET -> StringResource(R.string.no_internet)
+        NetworkError.SERVER_ERROR -> StringResource(R.string.server_error)
+        NetworkError.TIMEOUT -> StringResource(R.string.timeout)
+        NetworkError.UNKNOWN -> StringResource(R.string.unknown_error)
     }
 }
 
