@@ -53,7 +53,6 @@ class HomeViewModelTest {
     @Before
     fun setup() {
         every { timeZoneRepository.getSystemUtc() } returns TimeZone("UTC+05:00")
-
     }
 
     @Test

@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -74,6 +75,7 @@ class CalculateViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             coordinatesInputFlow
+                .drop(1)
                 .debounce(300)
                 .distinctUntilChanged()
                 .collect { input ->
@@ -88,22 +90,21 @@ class CalculateViewModel @Inject constructor(
         }
     }
 
-    fun calculateSunPosition() {
-        val coordinates = vmState.value.coordinates ?: return
+    fun calculateSunPosition() = viewModelScope.launch {
+        val coordinates = vmState.value.coordinates ?: return@launch
         val date = vmState.value.date
         val time = vmState.value.time
         val dateTime = date.atTime(time)
         val utcOffset = vmState.value.timeZone.getUTCDouble()
-        viewModelScope.launch {
-            val sunPosition = calculateSunPositionUseCase(
-                latitude = coordinates.latitude,
-                longitude = coordinates.longitude,
-                dateTime = dateTime,
-                utcOffset = utcOffset
-            )
-            vmState.update { state ->
-                state.copy(sunPosition = sunPosition)
-            }
+
+        val sunPosition = calculateSunPositionUseCase(
+            latitude = coordinates.latitude,
+            longitude = coordinates.longitude,
+            dateTime = dateTime,
+            utcOffset = utcOffset
+        )
+        vmState.update { state ->
+            state.copy(sunPosition = sunPosition)
         }
     }
 
