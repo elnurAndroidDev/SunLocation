@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.withTimeoutOrNull
 import java.time.LocalDateTime
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.minutes
@@ -102,13 +103,27 @@ class HomeViewModel @Inject constructor(
     private val weatherFlow: Flow<WeatherUiState> =
         weatherRefreshTriggers.flatMapLatest {
             flow {
-                emit(
-                    uiState.value.weather.copy(isLoading = true, error = null)
-                )
+                emit(uiState.value.weather.copy(isLoading = true, error = null))
 
-                val locationResult = lastLocation.filter { it is Result.Success }.first()
-                val loc = (locationResult as Result.Success).data
-                when (val result = getCurrentWeatherUseCase(loc.lat, loc.lon)) {
+                val loc = withTimeoutOrNull(3_000) {
+                    lastLocation.filter { it is Result.Success }.first()
+                }
+                val actualLoc = if (loc != null) {
+                    loc
+                } else {
+                    emit(
+                        uiState.value.weather.copy(
+                            isLoading = false,
+                            error = LocationError.NOT_AVAILABLE.toUiText()
+                        )
+                    )
+                    lastLocation.filter { it is Result.Success }.first()
+                }
+
+                emit(uiState.value.weather.copy(isLoading = true, error = null))
+
+                val coordinates = (actualLoc as Result.Success).data
+                when (val result = getCurrentWeatherUseCase(coordinates.lat, coordinates.lon)) {
                     is Result.Success -> emit(
                         WeatherUiState(
                             weatherUiData = result.data.toUiData(),

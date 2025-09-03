@@ -11,14 +11,14 @@ data class HomeUiState(
 
 data class WeatherUiState(
     val weatherUiData: WeatherUiData = WeatherUiData(),
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = true,
     val error: UiText? = null
 )
 
 data class SunUiState(
     val coordinates: String = "-",
-    val azimuth: String = "-",
-    val altitude: String = "-",
+    val azimuth: String = "-°",
+    val altitude: String = "-°",
     val error: UiText? = null
 )
 

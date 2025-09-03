@@ -187,7 +187,7 @@ fun WeatherCard(state: WeatherUiState, modifier: Modifier = Modifier) {
 
 @Composable
 fun LocationCard(state: SunUiState, modifier: Modifier = Modifier) {
-    val shimmerVisible = state.error == null
+    val shimmerVisible = state.error == null && state.coordinates == "-"
     GlassCard(modifier = modifier, padding = 0.dp) {
         Box(modifier = Modifier.fillMaxSize()) {
             Column(Modifier
