@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.isaevapps.presentation.ui.theme.SunLocationTheme
 import com.isaevapps.presentation.ui.theme.appColors
+import com.isaevapps.presentation.ui.theme.appTypography
 
 @Composable
 fun AppTextField(
@@ -44,11 +45,23 @@ fun AppTextField(
                 placeholder = {
                     Text(
                         placeholderText,
+                        style = MaterialTheme.appTypography.body,
                         color = MaterialTheme.appColors.onBackground
                     )
                 },
-                label = { Text(label, color = MaterialTheme.appColors.onBackground) },
-                textStyle = TextStyle(color = MaterialTheme.appColors.onBackground),
+                label = {
+                    Text(
+                        text = label,
+                        style = MaterialTheme.appTypography.label,
+                        color = MaterialTheme.appColors.onBackground
+                    )
+                },
+                textStyle = TextStyle(
+                    fontFamily = MaterialTheme.appTypography.body.fontFamily,
+                    fontWeight = MaterialTheme.appTypography.body.fontWeight,
+                    color = MaterialTheme.appColors.onBackground,
+                    fontSize = MaterialTheme.appTypography.body.fontSize
+                ),
                 colors = TextFieldDefaults.colors(
                     focusedTextColor = MaterialTheme.appColors.onBackground,
                     unfocusedTextColor = MaterialTheme.appColors.onBackground,

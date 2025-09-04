@@ -20,8 +20,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.isaevapps.presentation.ui.theme.appColors
+import com.isaevapps.presentation.ui.theme.appTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,6 +47,12 @@ fun DropDownMenu(
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
+            textStyle = TextStyle(
+                fontFamily = MaterialTheme.appTypography.body.fontFamily,
+                fontWeight = MaterialTheme.appTypography.body.fontWeight,
+                color = MaterialTheme.appColors.onBackground,
+                fontSize = MaterialTheme.appTypography.body.fontSize
+            ),
             colors = TextFieldDefaults.colors(
                 focusedTextColor = MaterialTheme.appColors.onBackground,
                 unfocusedTextColor = MaterialTheme.appColors.onBackground,
@@ -67,7 +75,7 @@ fun DropDownMenu(
         ) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(
-                    text = { Text(selectionOption) },
+                    text = { Text(selectionOption, style = MaterialTheme.appTypography.body) },
                     onClick = {
                         onSelectionChange(selectionOption)
                         expanded = false

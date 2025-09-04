@@ -20,3 +20,15 @@ data class AppColors(
 val LocalAppColors = staticCompositionLocalOf<AppColors> {
     error("No colors provided")
 }
+
+val darkColorScheme = AppColors(
+    onBackground = Color.White,
+    onSurface = DarkAccent,
+    primary = Color.White
+)
+
+val lightColorScheme = AppColors(
+    onBackground = Dark,
+    onSurface = DarkAccent,
+    primary = DarkPrimary
+)

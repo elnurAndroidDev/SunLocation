@@ -10,30 +10,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
-private val darkColorScheme = AppColors(
-    onBackground = Color.White,
-    onSurface = DarkAccent,
-    primary = Color.White
-)
-
-private val lightColorScheme = AppColors(
-    onBackground = Dark,
-    onSurface = DarkAccent,
-    primary = DarkPrimary
-)
-
-private val lightGradients = Gradients(
-    background = LightBackgroundGradient,
-    primary = LightPrimaryGradient,
-    accent = LightAccentGradient
-)
-
-private val darkGradients = Gradients(
-    background = DarkBackgroundGradient,
-    primary = DarkPrimaryGradient,
-    accent = DarkAccentGradient
-)
-
 @Composable
 fun SunLocationTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -43,10 +19,10 @@ fun SunLocationTheme(
     val appGradients = if (darkTheme) darkGradients else lightGradients
     CompositionLocalProvider(
         LocalGradients provides appGradients,
-        LocalAppColors provides appColors
+        LocalAppColors provides appColors,
+        LocalAppTypography provides appTypography
     ) {
         MaterialTheme(
-            typography = Typography,
             content = {
                 Surface(
                     modifier = Modifier
@@ -67,3 +43,7 @@ val MaterialTheme.gradients: Gradients
 val MaterialTheme.appColors: AppColors
     @Composable
     get() = LocalAppColors.current
+
+val MaterialTheme.appTypography: AppTypography
+    @Composable
+    get() = LocalAppTypography.current

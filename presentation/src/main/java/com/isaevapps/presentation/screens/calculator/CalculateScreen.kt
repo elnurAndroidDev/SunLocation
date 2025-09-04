@@ -26,22 +26,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.isaevapps.domain.result.CoordinatesError
 import com.isaevapps.presentation.R
+import com.isaevapps.presentation.screens.common.GlassCard
 import com.isaevapps.presentation.screens.components.AppDatePickerDialog
 import com.isaevapps.presentation.screens.components.AppTextField
 import com.isaevapps.presentation.screens.components.AppTimePickerDialog
 import com.isaevapps.presentation.screens.components.DropDownMenu
-import com.isaevapps.presentation.screens.components.GlassCard
 import com.isaevapps.presentation.screens.components.MetricPill
 import com.isaevapps.presentation.screens.components.SunBadge
 import com.isaevapps.presentation.ui.theme.SunLocationTheme
 import com.isaevapps.presentation.ui.theme.appColors
+import com.isaevapps.presentation.ui.theme.appTypography
 import com.isaevapps.presentation.ui.theme.gradients
 import com.isaevapps.presentation.utils.toLocalDateOrNull
 import com.isaevapps.presentation.utils.toLocalTimeOrNull
@@ -103,20 +103,16 @@ fun CalculateScreenContent(
         ) {
             Text(
                 stringResource(R.string.sun_calculator),
-                style = MaterialTheme.typography.titleLarge.copy(
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.appColors.onBackground
-                )
+                style = MaterialTheme.appTypography.headline,
+                color = MaterialTheme.appColors.onBackground
             )
 
-            GlassCard {
+            GlassCard(padding = 16.dp) {
                 Column {
                     Text(
                         stringResource(R.string.input),
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            color = MaterialTheme.appColors.onBackground,
-                            fontWeight = FontWeight.SemiBold
-                        )
+                        style = MaterialTheme.appTypography.title,
+                        color = MaterialTheme.appColors.onBackground,
                     )
                     Spacer(Modifier.height(12.dp))
 
@@ -174,7 +170,11 @@ fun CalculateScreenContent(
                             .fillMaxWidth()
                             .background(MaterialTheme.gradients.accent, RoundedCornerShape(16.dp)),
                     ) {
-                        Text(stringResource(R.string.calculate), color = Color.White)
+                        Text(
+                            stringResource(R.string.calculate),
+                            style = MaterialTheme.appTypography.body,
+                            color = Color.White
+                        )
                     }
                 }
             }
@@ -189,10 +189,8 @@ fun CalculateScreenContent(
                     ) {
                         Text(
                             stringResource(R.string.sun_position),
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                color = MaterialTheme.appColors.onBackground,
-                                fontWeight = FontWeight.SemiBold
-                            )
+                            style = MaterialTheme.appTypography.title,
+                            color = MaterialTheme.appColors.onBackground,
                         )
                         SunBadge()
                     }
@@ -218,7 +216,8 @@ fun CalculateScreenContent(
     }
 }
 
-@Preview(showSystemUi = false, showBackground = false,
+@Preview(
+    showSystemUi = false, showBackground = false,
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL
 )
 @Composable

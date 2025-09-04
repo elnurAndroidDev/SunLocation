@@ -15,10 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.isaevapps.presentation.ui.theme.appColors
+import com.isaevapps.presentation.ui.theme.appTypography
 
 @Composable
 fun MetricPill(
@@ -36,18 +36,15 @@ fun MetricPill(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 title,
-                style = MaterialTheme.typography.labelLarge.copy(
-                    color = MaterialTheme.appColors.onBackground.copy(alpha = 0.85f)
-                )
+                style = MaterialTheme.appTypography.labelLarge,
+                color = MaterialTheme.appColors.onBackground.copy(alpha = 0.8f),
             )
         }
         Spacer(Modifier.height(6.dp))
         Text(
             value,
-            style = MaterialTheme.typography.titleLarge.copy(
-                color = MaterialTheme.appColors.onBackground,
-                fontWeight = FontWeight.SemiBold
-            ),
+            style = MaterialTheme.appTypography.bodyLarge,
+            color = MaterialTheme.appColors.onBackground,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .widthIn(80.dp)

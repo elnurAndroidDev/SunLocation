@@ -66,3 +66,15 @@ val LightPrimaryGradient = Brush.horizontalGradient(
         Color(0xFFB9D3DA)  // пастельный бирюзовый
     )
 )
+
+val lightGradients = Gradients(
+    background = LightBackgroundGradient,
+    primary = LightPrimaryGradient,
+    accent = LightAccentGradient
+)
+
+val darkGradients = Gradients(
+    background = DarkBackgroundGradient,
+    primary = DarkPrimaryGradient,
+    accent = DarkAccentGradient
+)
