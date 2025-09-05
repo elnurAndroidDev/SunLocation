@@ -1,6 +1,5 @@
 package com.isaevapps.presentation.screens.calculator
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,6 +17,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,7 +30,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.isaevapps.domain.result.CoordinatesError
 import com.isaevapps.presentation.R
 import com.isaevapps.presentation.screens.common.GlassCard
 import com.isaevapps.presentation.screens.components.AppDatePickerDialog
@@ -45,7 +44,6 @@ import com.isaevapps.presentation.ui.theme.appTypography
 import com.isaevapps.presentation.ui.theme.gradients
 import com.isaevapps.presentation.utils.toLocalDateOrNull
 import com.isaevapps.presentation.utils.toLocalTimeOrNull
-import com.isaevapps.presentation.utils.toUiText
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -216,38 +214,28 @@ fun CalculateScreenContent(
     }
 }
 
-@Preview(
-    showSystemUi = false, showBackground = false,
-    uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL
-)
+@Preview(name = "Light")
 @Composable
 private fun CalculateScreenContentPreview() {
     SunLocationTheme {
-        CalculateScreenContent(
-            state = CalculateUiState(
-                timeZones = listOf("UTC+01:00", "UTC+02:00", "UTC+03:00"),
-                timeZone = "UTC+02:00",
-                date = "01.01.2023",
-                time = "12:00",
-                coordinates = "55°45′0″N 37°37′0″E"
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.gradients.background),
+            color = Color.Transparent
+        ) {
+            CalculateScreenContent(
+                state = CalculateUiState(
+                    timeZones = listOf("UTC+01:00", "UTC+02:00", "UTC+03:00"),
+                    timeZone = "UTC+02:00",
+                    date = "01.01.2023",
+                    time = "12:00",
+                    coordinates = "41.476104, 69.575205",
+                    azimuth = "123°",
+                    altitude = "45°",
+                    invalidCoordinates = null
+                )
             )
-        )
-    }
-}
-
-@Preview(showSystemUi = false, showBackground = false)
-@Composable
-private fun CalculateScreenContentNightPreview() {
-    SunLocationTheme {
-        CalculateScreenContent(
-            state = CalculateUiState(
-                timeZones = listOf("UTC+01:00", "UTC+02:00", "UTC+03:00"),
-                timeZone = "UTC+02:00",
-                date = "01.01.2023",
-                time = "12:00",
-                coordinates = "100°45′0″N 37°37′0″E",
-                invalidCoordinates = CoordinatesError.INVALID_LATITUDE.toUiText()
-            )
-        )
+        }
     }
 }

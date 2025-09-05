@@ -3,19 +3,21 @@
 package com.isaevapps.presentation.screens.main
 
 import android.Manifest
-import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,9 +29,11 @@ import com.isaevapps.presentation.R
 import com.isaevapps.presentation.screens.main.cards.CompassCard
 import com.isaevapps.presentation.screens.main.cards.LocationCard
 import com.isaevapps.presentation.screens.main.cards.WeatherCard
+import com.isaevapps.presentation.screens.main.models.WeatherUiData
 import com.isaevapps.presentation.ui.theme.SunLocationTheme
 import com.isaevapps.presentation.ui.theme.appColors
 import com.isaevapps.presentation.ui.theme.appTypography
+import com.isaevapps.presentation.ui.theme.gradients
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -82,9 +86,40 @@ fun HomeScreenContent(
     }
 }
 
-@Preview(name = "Sun UI — Light", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = false)
+@Preview(name = "Light")
 @Composable
-private fun PreviewSunUiLight() {
+private fun PreviewHomeLight() {
+
+    val weatherData = WeatherUiData(
+        city = "Tashkent",
+        temp = "25°C",
+        condition = "Sunny"
+    )
+    val weatherState = WeatherUiState(weatherUiData = weatherData, isLoading = false)
+
+    val sunState = SunUiState(
+        coordinates = "41.476104, 69.575205",
+        azimuth = "123°",
+        altitude = "45°",
+        error = null
+    )
+
+    val compassState = CompassUiState(azimuth = 123, rotation = -123)
+
+    val state = HomeUiState(
+        weather = weatherState,
+        sun = sunState,
+        compass = compassState
+    )
+
     SunLocationTheme {
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.gradients.background),
+            color = Color.Transparent
+        ) {
+            HomeScreenContent(state)
+        }
     }
 }
