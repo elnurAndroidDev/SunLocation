@@ -1,14 +1,9 @@
 package com.isaevapps.presentation.ui.theme
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 
 @Composable
 fun SunLocationTheme(
@@ -23,15 +18,7 @@ fun SunLocationTheme(
         LocalAppTypography provides appTypography
     ) {
         MaterialTheme(
-            content = {
-                Surface(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(appGradients.background),
-                    color = Color.Transparent,
-                    content = content
-                )
-            }
+            content = content
         )
     }
 }
