@@ -19,10 +19,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.isaevapps.presentation.R
 import com.isaevapps.presentation.screens.common.GlassCard
 import com.isaevapps.presentation.screens.main.CompassUiState
+import com.isaevapps.presentation.ui.theme.SunLocationTheme
 import com.isaevapps.presentation.ui.theme.appColors
 import com.isaevapps.presentation.ui.theme.appTypography
 
@@ -59,5 +61,15 @@ fun CompassCard(state: CompassUiState, modifier: Modifier = Modifier) {
                 )
             }
         }
+    }
+}
+
+
+@Preview
+@Composable
+private fun CompassPreview() {
+    val state = CompassUiState(azimuth = 123, rotation = -123)
+    SunLocationTheme {
+        CompassCard(state)
     }
 }

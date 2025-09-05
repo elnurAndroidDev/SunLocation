@@ -21,12 +21,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.isaevapps.domain.result.NetworkError
 import com.isaevapps.presentation.screens.common.GlassCard
 import com.isaevapps.presentation.screens.components.shimmer
 import com.isaevapps.presentation.screens.main.WeatherUiState
+import com.isaevapps.presentation.screens.main.models.WeatherUiData
+import com.isaevapps.presentation.ui.theme.SunLocationTheme
 import com.isaevapps.presentation.ui.theme.appColors
 import com.isaevapps.presentation.ui.theme.appTypography
+import com.isaevapps.presentation.utils.toUiText
 
 @Composable
 fun WeatherCard(state: WeatherUiState) {
@@ -100,5 +105,59 @@ fun WeatherCard(state: WeatherUiState) {
                 )
             }
         }
+    }
+}
+
+@Preview(name = "SuccessLight", showSystemUi = false, showBackground = false)
+@Composable
+private fun SuccessWeatherPreview() {
+    val weatherData = WeatherUiData(
+        city = "Tashkent",
+        temp = "25°C",
+        condition = "Sunny"
+    )
+    SunLocationTheme {
+        WeatherCard(
+            state = WeatherUiState(weatherUiData = weatherData, isLoading = false)
+        )
+    }
+}
+
+@Preview(name = "LoadingLight", showSystemUi = false, showBackground = false)
+@Composable
+private fun LoadingWeatherPreview() {
+    SunLocationTheme {
+        WeatherCard(
+            state = WeatherUiState(isLoading = true)
+        )
+    }
+}
+
+@Preview(name = "FirstErrorLight", showSystemUi = false, showBackground = false)
+@Composable
+private fun FirstErrorWeatherPreview() {
+    SunLocationTheme {
+        WeatherCard(
+            state = WeatherUiState(isLoading = false, error = NetworkError.NO_INTERNET.toUiText())
+        )
+    }
+}
+
+@Preview(name = "NextErrorLight", showSystemUi = false, showBackground = false)
+@Composable
+private fun NextErrorWeatherPreview() {
+    val weatherData = WeatherUiData(
+        city = "Tashkent",
+        temp = "25°C",
+        condition = "Sunny"
+    )
+    SunLocationTheme {
+        WeatherCard(
+            state = WeatherUiState(
+                weatherUiData = weatherData,
+                isLoading = false,
+                error = NetworkError.NO_INTERNET.toUiText()
+            )
+        )
     }
 }

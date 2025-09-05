@@ -23,14 +23,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.isaevapps.domain.result.LocationError
 import com.isaevapps.presentation.R
 import com.isaevapps.presentation.screens.common.GlassCard
 import com.isaevapps.presentation.screens.components.MetricPill
 import com.isaevapps.presentation.screens.components.shimmer
 import com.isaevapps.presentation.screens.main.SunUiState
+import com.isaevapps.presentation.ui.theme.SunLocationTheme
 import com.isaevapps.presentation.ui.theme.appColors
 import com.isaevapps.presentation.ui.theme.appTypography
+import com.isaevapps.presentation.utils.toUiText
 
 @Composable
 fun LocationCard(state: SunUiState) {
@@ -92,5 +96,53 @@ fun LocationCard(state: SunUiState) {
                 )
             }
         }
+    }
+}
+
+@Preview(name = "Loading")
+@Composable
+private fun LoadingLocationCardPreview() {
+    val state = SunUiState()
+    SunLocationTheme {
+        LocationCard(state)
+    }
+}
+
+@Preview(name = "Success")
+@Composable
+private fun SuccessLocationCardPreview() {
+    val state = SunUiState(
+        coordinates = "41.476104, 69.575205",
+        azimuth = "123°",
+        altitude = "45°",
+        error = null
+    )
+    SunLocationTheme {
+        LocationCard(state)
+    }
+}
+
+@Preview(name = "FirstError")
+@Composable
+private fun FirstErrorLocationCardPreview() {
+    val state = SunUiState(
+        error = LocationError.NOT_AVAILABLE.toUiText()
+    )
+    SunLocationTheme {
+        LocationCard(state)
+    }
+}
+
+@Preview(name = "NextError")
+@Composable
+private fun NextErrorLocationCardPreview() {
+    val state = SunUiState(
+        coordinates = "41.476104, 69.575205",
+        azimuth = "123°",
+        altitude = "45°",
+        error = LocationError.NOT_AVAILABLE.toUiText()
+    )
+    SunLocationTheme {
+        LocationCard(state)
     }
 }
