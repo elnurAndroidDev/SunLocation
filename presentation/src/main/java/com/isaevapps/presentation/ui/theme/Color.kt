@@ -24,7 +24,7 @@ val LocalAppColors = staticCompositionLocalOf<AppColors> {
 }
 
 val darkColorScheme = AppColors(
-    background = Dark,
+    background = DarkAccent,
     onBackground = Color.White,
     onSurface = DarkAccent,
     primary = Color.White

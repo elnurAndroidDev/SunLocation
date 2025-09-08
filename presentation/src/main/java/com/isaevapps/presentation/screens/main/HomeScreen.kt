@@ -3,6 +3,7 @@
 package com.isaevapps.presentation.screens.main
 
 import android.Manifest
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -46,6 +48,7 @@ import com.isaevapps.presentation.ui.theme.appColors
 import com.isaevapps.presentation.ui.theme.appTypography
 import com.isaevapps.presentation.ui.theme.gradients
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
@@ -83,7 +86,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         },
         containerColor = Color.Transparent,
         contentColor = Color.Transparent,
-    ) { innerPadding ->
+    ) {
         HomeScreenContent(
             state = state,
             modifier = modifier
@@ -93,7 +96,12 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             ModalBottomSheet(
                 onDismissRequest = { showCompassSheet = false },
                 containerColor = MaterialTheme.appColors.background,
-                sheetState = compassSheetState
+                sheetState = compassSheetState,
+                dragHandle = {
+                    BottomSheetDefaults.DragHandle(
+                        color = MaterialTheme.appColors.primary
+                    )
+                }
             ) {
                 CompassCard(state = compassUiState, Modifier.padding(16.dp))
             }
