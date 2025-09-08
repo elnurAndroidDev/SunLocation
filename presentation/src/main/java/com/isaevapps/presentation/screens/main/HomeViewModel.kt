@@ -57,7 +57,7 @@ class HomeViewModel @Inject constructor(
                 initialValue = null
             )
 
-    private val compassFlow: Flow<CompassUiState> = observeCompassUseCase()
+    val compassFlow: Flow<CompassUiState> = observeCompassUseCase()
         .map { compass ->
             CompassUiState(
                 azimuth = (compass.azimuth + 360) % 360,
@@ -146,13 +146,11 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<HomeUiState> =
         combine(
             weatherFlow,
-            sunFlow,
-            compassFlow
-        ) { weather, sun, compass ->
+            sunFlow
+        ) { weather, sun ->
             HomeUiState(
                 weather = weather,
-                sun = sun,
-                compass = compass
+                sun = sun
             )
         }
             .stateIn(

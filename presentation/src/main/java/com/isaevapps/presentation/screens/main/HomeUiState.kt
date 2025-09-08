@@ -5,8 +5,7 @@ import com.isaevapps.presentation.utils.UiText
 
 data class HomeUiState(
     val weather: WeatherUiState = WeatherUiState(),
-    val sun: SunUiState = SunUiState(),
-    val compass: CompassUiState = CompassUiState()
+    val sun: SunUiState = SunUiState()
 )
 
 data class WeatherUiState(
