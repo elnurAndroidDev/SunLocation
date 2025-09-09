@@ -1,5 +1,6 @@
 package com.isaevapps.presentation.screens.calculator
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -161,18 +162,28 @@ fun CalculateScreenContent(
                         onClick = onCalculateClick,
                         elevation = ButtonDefaults.buttonElevation(defaultElevation = 12.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.appColors.primary.copy(alpha = 0f),
+                            containerColor = Color.Transparent,
                         ),
                         contentPadding = PaddingValues(),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(MaterialTheme.gradients.accent, RoundedCornerShape(16.dp)),
+                            .height(48.dp)
                     ) {
-                        Text(
-                            stringResource(R.string.calculate),
-                            style = MaterialTheme.appTypography.body,
-                            color = Color.White
-                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(
+                                    MaterialTheme.gradients.accent,
+                                    RoundedCornerShape(16.dp)
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                stringResource(R.string.calculate),
+                                style = MaterialTheme.appTypography.body,
+                                color = Color.White
+                            )
+                        }
                     }
                 }
             }
@@ -214,7 +225,7 @@ fun CalculateScreenContent(
     }
 }
 
-@Preview(name = "Light")
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL)
 @Composable
 private fun CalculateScreenContentPreview() {
     SunLocationTheme {
